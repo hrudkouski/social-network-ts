@@ -1,0 +1,20 @@
+.AppNav {
+    grid-area: n;
+    background-color: brown;
+}
+
+.item {
+    text-decoration: none;
+    color: #f3dcf5;
+    margin: 15px;
+}
+
+.item a {
+    text-decoration: none;
+    color: #f3dcf5;
+}
+
+.item a:hover {
+    color: gold;
+    font-weight: bold;
+}

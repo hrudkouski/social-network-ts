@@ -1,0 +1,16 @@
+.AppContent {
+    grid-area: c;
+    background-color: chocolate;
+}
+
+.AppLogo {
+    height: 7vmin;
+    pointer-events: none;
+}
+
+
+.item {
+    text-decoration: line-through;
+    color: #034141;
+    margin-left: 55px;
+}

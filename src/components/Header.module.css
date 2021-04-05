@@ -1,0 +1,9 @@
+.AppHeader {
+    grid-area: h;
+    background-color: #034141;
+}
+
+.AppLogo {
+    height: 7vmin;
+    pointer-events: none;
+}

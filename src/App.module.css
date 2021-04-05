@@ -1,0 +1,17 @@
+.AppWrapper {
+    display: grid;
+    grid-template-areas:
+"h h"
+"n c";
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 10px;
+    background-color: #faf8f8;
+    border: #0e0e0e solid 10px;
+}
+
+
+
+
+
+
