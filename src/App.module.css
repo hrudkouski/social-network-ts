@@ -10,6 +10,13 @@
     border: #0e0e0e solid 10px;
 }
 
+.AppContent {
+    grid-area: c;
+    background-color: #0e7a6a;
+}
+
+
+
 
 
 

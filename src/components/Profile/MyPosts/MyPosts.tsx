@@ -4,25 +4,25 @@ import {Post} from "./Post/Post";
 
 export const MyPosts = () => {
     return (
-        <div>
+        <div className={s.myPosts}>
             My posts - component
             <div>
                 <div>
                     <textarea>new text...</textarea>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={() => alert('1')}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
                 <Post
-                    message='Перебираемые (или итерируемые) объекты – это концепция, которая позволяет использовать любой объект в цикле for..of.'
+                    message='Перебираемые (или итерируемые) объекты – это...'
                     likesCount={9}/>
                 <Post
-                    message='Конечно же, сами массивы являются перебираемыми объектами. Но есть и много других встроенных перебираемых объектов, например, строки.'
+                    message='Конечно же, сами массивы являются перебираемыми...'
                     likesCount={19}/>
                 <Post
-                    message='Если объект не является массивом, но представляет собой коллекцию каких-то элементов, то удобно использовать цикл for..of для их перебора, так что давайте посмотрим, как это сделать.'
+                    message='Если объект не является массивом, но представляет...'
                     likesCount={3}/>
             </div>
         </div>

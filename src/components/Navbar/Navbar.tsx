@@ -6,22 +6,22 @@ export const Navbar = () => {
     return (
         <nav className={s.AppNav}>
             <div className={s.item}>
-                <a href="https://www.google.com/">Profile</a>
+                <a href={"/profile"}>Profile</a>
             </div>
             <div className={s.item}>
-                <a href="https://www.google.com/">Messages</a>
+                <a href={"/dialogs"}>Messages</a>
             </div>
             <div className={s.item}>
-                <a href="https://www.google.com/">News</a>
+                <a href={"/news"}>News</a>
             </div>
             <div className={s.item}>
-                <a href="https://www.google.com/">Music</a>
+                <a href={"/music"}>Music</a>
             </div>
             <div className={s.item}>
-                <a href="https://www.google.com/">Settings</a>
+                <a href={"/settings"}>Settings</a>
             </div>
             <div className={s.item}>
-                <a href="https://www.google.com/">Find friends</a>
+                <a href={"/findFriends"}>Find friends</a>
             </div>
         </nav>
     );
