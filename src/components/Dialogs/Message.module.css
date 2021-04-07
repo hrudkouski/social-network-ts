@@ -1,0 +1,8 @@
+
+.message {
+    margin-left: 15px;
+}
+
+.message.active {
+    color: gold;
+}

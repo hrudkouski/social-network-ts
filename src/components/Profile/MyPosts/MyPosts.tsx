@@ -5,7 +5,7 @@ import {Post} from "./Post/Post";
 export const MyPosts = () => {
     return (
         <div className={s.myPosts}>
-            My posts - component
+            <h3>My posts</h3>
             <div>
                 <div>
                     <textarea>new text...</textarea>

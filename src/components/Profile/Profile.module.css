@@ -1,4 +1,3 @@
-.AppLogo {
-    height: 7vmin;
-    pointer-events: none;
+.AppContent {
+    padding: 20px;
 }

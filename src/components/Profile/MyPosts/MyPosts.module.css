@@ -5,3 +5,8 @@
 .posts {
     margin: 15px 0;
 }
+
+textarea {
+    width: 70%;
+    min-height: 50px;
+}

@@ -17,8 +17,8 @@ function App() {
                 <Header/>
                 <Navbar/>
                 <div className={s.AppContent}>
-                    <Route component={Profile} path="/profile"/>
-                    <Route component={Dialogs} path="/dialogs"/>
+                    <Route component={Profile} exact path="/profile"/>
+                    <Route component={Dialogs} exact path="/dialogs"/>
                     <Route component={News} path="/news"/>
                     <Route component={Music} path="/music"/>
                     <Route component={Settings} path="/settings"/>

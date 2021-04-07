@@ -1,3 +1,8 @@
 .dialogs {
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+}
 
+.messages {
+    line-height: 50px;
 }
