@@ -4,23 +4,36 @@ import {DialogsItem} from "./DialogsItem";
 import {Message} from "./Message";
 
 export const Dialogs = () => {
+
+    const dialogsData = [
+        {id: 1, name: 'Nikita'},
+        {id: 2, name: 'Masha'},
+        {id: 3, name: 'Sasha'},
+        {id: 4, name: 'Kirill'},
+        {id: 5, name: 'Vasil'},
+        {id: 6, name: 'Jon'},
+    ]
+
+    const messagesData = [
+        {id: 1, message: 'Hi! how are you?'},
+        {id: 2, message: 'Hi! How old are you?'},
+        {id: 3, message: 'Hi! Where are you from?'},
+        {id: 4, message: 'Hello! I don\'t need books'},
+        {id: 5, message: 'How do you do?'},
+        {id: 6, message: 'I\'m fine'},
+    ]
+
+    let dialogsElements = dialogsData.map(el => <DialogsItem name={el.name} id={el.id}/>);
+
+    let messagesElements = messagesData.map(el => <Message message={el.message}/>);
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                <DialogsItem name='Nikita' id={1}/>
-                <DialogsItem name='Masha' id={2}/>
-                <DialogsItem name='Sasha' id={3}/>
-                <DialogsItem name='Kirill' id={4}/>
-                <DialogsItem name='Vasil' id={5}/>
-                <DialogsItem name='Jon' id={6}/>
+                {dialogsElements}
             </div>
             <div className={s.messages}>
-                <Message message='Hi! how are you?'/>
-                <Message message='Hi! How old are you?'/>
-                <Message message='Hi! Where are you from?'/>
-                <Message message='Hello!'/>
-                <Message message='How do you do?'/>
-                <Message message="I'm fine"/>
+                {messagesElements}
             </div>
         </div>
     )
