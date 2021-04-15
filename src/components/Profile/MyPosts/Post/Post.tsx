@@ -18,6 +18,5 @@ export const Post: React.FC<PostPropsType> = (props) => {
                 <span>&#9825; - {props.likesCount}</span>
             </div>
         </div>
-
-    );
+    )
 }

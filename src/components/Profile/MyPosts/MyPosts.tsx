@@ -1,28 +1,11 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
+import {ProfilePageType} from "../../../redux/state";
 
-export const MyPosts = () => {
+export const MyPosts: React.FC<ProfilePageType> = (props) => {
 
-    const postsData = [
-        {
-            id: 1,
-            message: 'Перебираемые (или итерируемые) объекты – это...',
-            likesCount: 9
-        },
-        {
-            id: 2,
-            message: 'Конечно же, сами массивы являются перебираемыми...',
-            likesCount: 19
-        },
-        {
-            id: 3,
-            message: 'Если объект не является массивом, но представляет...',
-            likesCount: 3
-        },
-    ]
-
-    let postsElements = postsData.map(el =>
+    let postsElements = props.posts.map(el =>
         <Post message={el.message} likesCount={el.likesCount}/>);
 
     return (
@@ -40,5 +23,5 @@ export const MyPosts = () => {
                 {postsElements}
             </div>
         </div>
-    );
+    )
 }

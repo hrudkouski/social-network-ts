@@ -9,16 +9,23 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {FindFriends} from './components/FindFriends/FindFriends';
+import state from './redux/state';
 
 function App() {
+
+    let posts = state.profilePage.posts;
+    let dialogs = state.dialogsPage.dialogs;
+    let messages = state.dialogsPage.messages;
+
     return (
         <BrowserRouter>
             <div className={s.AppWrapper}>
                 <Header/>
                 <Navbar/>
                 <div className={s.AppContent}>
-                    <Route component={Profile} exact path="/profile"/>
-                    <Route component={Dialogs} exact path="/dialogs"/>
+                    <Route render={() => <Profile posts={posts}/>} exact path="/profile"/>
+                    <Route render={() => <Dialogs dialogs={dialogs} messages={messages}/>}
+                           exact path="/dialogs"/>
                     <Route component={News} path="/news"/>
                     <Route component={Music} path="/music"/>
                     <Route component={Settings} path="/settings"/>
