@@ -9,6 +9,16 @@
     margin: 15px;
 }
 
+.item img {
+    margin: 10px;
+    width: 40px;
+    border-radius: 40px;
+}
+
+.item:last-child {
+    margin-top: 150px;
+}
+
 .item a {
     text-decoration: none;
     color: #f3dcf5;
@@ -21,4 +31,8 @@
 
 .item a:hover {
     font-weight: bold;
+}
+
+.item span {
+    color: #0aa712;
 }

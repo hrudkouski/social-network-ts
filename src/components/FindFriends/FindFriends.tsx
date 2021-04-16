@@ -3,7 +3,7 @@ import s from './FindFriends.module.css'
 
 export const FindFriends = () => {
     return (
-        <div className={s.dialogs}>
+        <div className={s.findFriends}>
             FindFriends
         </div>
     )
