@@ -9,13 +9,17 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {FindFriends} from './components/FindFriends/FindFriends';
-import state from './redux/state';
+import {RootStateType} from "./redux/state";
 
-function App() {
+type AppPropsType = {
+    updateNewPostText: (newPostText: string) => void
+    addPost: () => void
+    state: RootStateType
+    addMessage: () => void
+    updateTextMessage: (newMessage: string) => void
+}
 
-    let posts = state.profilePage.posts;
-    let dialogs = state.dialogsPage.dialogs;
-    let messages = state.dialogsPage.messages;
+function App(props: AppPropsType) {
 
     return (
         <BrowserRouter>
@@ -23,8 +27,19 @@ function App() {
                 <Header/>
                 <Navbar/>
                 <div className={s.AppContent}>
-                    <Route render={() => <Profile posts={posts}/>} exact path="/profile"/>
-                    <Route render={() => <Dialogs dialogs={dialogs} messages={messages}/>}
+                    <Route render={() =>
+                        <Profile
+                            profilePage={props.state.profilePage}
+                            updateNewPostText={props.updateNewPostText}
+                            addPost={props.addPost}
+                        />}
+                           exact path="/profile"/>
+                    <Route render={() =>
+                        <Dialogs
+                            addMessage={props.addMessage}
+                            updateTextMessage={props.updateTextMessage}
+                            dialogsPage={props.state.dialogsPage}
+                        />}
                            exact path="/dialogs"/>
                     <Route component={News} path="/news"/>
                     <Route component={Music} path="/music"/>

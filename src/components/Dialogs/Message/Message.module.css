@@ -1,8 +1,11 @@
-
 .message {
     margin-left: 15px;
 }
 
 .message.active {
     color: gold;
+}
+
+.messageTextArea {
+    background-color: #62c665;
 }

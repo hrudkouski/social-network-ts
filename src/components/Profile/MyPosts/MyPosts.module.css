@@ -6,7 +6,7 @@
     margin: 15px 0;
 }
 
-textarea {
+.myPostTextarea {
     width: 70%;
     min-height: 50px;
 }
