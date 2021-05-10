@@ -19,7 +19,7 @@ type AppPropsType = {
     updateTextMessage: (newMessage: string) => void
 }
 
-function App(props: AppPropsType) {
+function App({addPost, updateNewPostText, state, ...props}: AppPropsType) {
 
     return (
         <BrowserRouter>
@@ -29,16 +29,16 @@ function App(props: AppPropsType) {
                 <div className={s.AppContent}>
                     <Route render={() =>
                         <Profile
-                            profilePage={props.state.profilePage}
-                            updateNewPostText={props.updateNewPostText}
-                            addPost={props.addPost}
+                            profilePage={state.profilePage}
+                            updateNewPostText={updateNewPostText}
+                            addPost={addPost}
                         />}
                            exact path="/profile"/>
                     <Route render={() =>
                         <Dialogs
                             addMessage={props.addMessage}
                             updateTextMessage={props.updateTextMessage}
-                            dialogsPage={props.state.dialogsPage}
+                            dialogsPage={state.dialogsPage}
                         />}
                            exact path="/dialogs"/>
                     <Route component={News} path="/news"/>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent,KeyboardEvent} from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {ProfilePageType} from "../../../redux/state";
@@ -21,6 +21,12 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
         props.addPost();
     }
 
+    const onKeyPressAddPost = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.ctrlKey) {
+            props.addPost();
+        }
+    }
+
     const onnPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewPostText(e.currentTarget.value)
     }
@@ -31,12 +37,15 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             <div>
                 <div>
                     <textarea
+                        onKeyPress={onKeyPressAddPost}
                         onChange={onnPostChange}
                         value={props.profilePage.newPostText}
                         className={s.myPostTextarea}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button
+                        onClick={addPost}>Add post
+                    </button>
                 </div>
             </div>
             <div className={s.posts}>
