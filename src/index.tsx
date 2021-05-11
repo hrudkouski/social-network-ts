@@ -10,10 +10,8 @@ export let _callSubscriber = () => {
         <React.StrictMode>
             <App
                 state={store.getState()}
-                addMessage={store.addMessage.bind(store)}
-                updateTextMessage={store.updateTextMessage.bind(store)}
-                updateNewPostText={store.updateNewPostText.bind(store)}
-                addPost={store.addPost.bind(store)}/>
+                dispatch={store.dispatch.bind(store)}
+            />
         </React.StrictMode>,
         document.getElementById('root')
     );

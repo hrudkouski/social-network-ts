@@ -1,12 +1,11 @@
 import React, {ChangeEvent,KeyboardEvent} from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {ProfilePageType} from "../../../redux/state";
+import {ActionsTypes, addPostAC, ProfilePageType, updateNewPostTextAC} from "../../../redux/state";
 
 type MyPostsPropsType = {
     profilePage: ProfilePageType
-    updateNewPostText: (newPostText: string) => void
-    addPost: () => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -18,17 +17,17 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             likesCount={el.likesCount}/>);
 
     const addPost = () => {
-        props.addPost();
+        props.dispatch(addPostAC())
     }
 
     const onKeyPressAddPost = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.ctrlKey) {
-            props.addPost();
+            props.dispatch(addPostAC())
         }
     }
 
     const onnPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
+        props.dispatch(updateNewPostTextAC(e.currentTarget.value))
     }
 
     return (

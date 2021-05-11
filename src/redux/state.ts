@@ -1,3 +1,8 @@
+const ADD_POST = 'ADD_POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const ADD_MESSAGE = 'ADD_MESSAGE';
+const UPDATE_TEXT_MESSAGE = 'UPDATE_TEXT_MESSAGE';
+
 export type MessageType = {
     id: number
     message: string
@@ -29,13 +34,15 @@ export type RootStateType = {
 export type StoreType = {
     _state: RootStateType
     _callSubscriber: () => void
-    updateNewPostText: (newPostText: string) => void
-    addPost: () => void
     subscribe: (observer: () => void) => void
-    updateTextMessage: (newMessage: string) => void
     getState: () => RootStateType
-    addMessage: () => void
+    dispatch: (action: ActionsTypes) => void
 }
+export type ActionsTypes =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof addMessageAC>
+    | ReturnType<typeof updateNewTextMessageAC>;
 
 let store: StoreType = {
     _state: {
@@ -84,38 +91,56 @@ let store: StoreType = {
         console.log('state is changed')
     },
     subscribe(observer) {
-        this._callSubscriber = observer; //observer - pattern (publisher subscriber)
+        this._callSubscriber = observer;
     },
     getState() {
         return this._state;
     },
-    addPost() {
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 19
+    dispatch(action: ActionsTypes) {
+        switch (action.type) {
+            case ADD_POST:
+                const newPost: PostType = {
+                    id: new Date().getTime(),
+                    message: this._state.profilePage.newPostText,
+                    likesCount: 19
+                }
+                this._state.profilePage.posts.push(newPost);
+                this._state.profilePage.newPostText = '';
+                this._callSubscriber();
+                break;
+            case UPDATE_NEW_POST_TEXT:
+                this._state.profilePage.newPostText = action.newPostText;
+                this._callSubscriber();
+                break;
+            case ADD_MESSAGE:
+                const newMessagePost: MessageType = {
+                    id: new Date().getTime(),
+                    message: this._state.dialogsPage.newMessage
+                }
+                this._state.dialogsPage.messages.push(newMessagePost);
+                this._state.dialogsPage.newMessage = '';
+                this._callSubscriber();
+                break;
+            case UPDATE_TEXT_MESSAGE:
+                this._state.dialogsPage.newMessage = action.newMessage;
+                this._callSubscriber();
         }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber();
-    },
-    updateNewPostText(newPostText: string) {
-        this._state.profilePage.newPostText = newPostText;
-        this._callSubscriber();
-    },
-    addMessage() {
-        const newMessagePost: MessageType = {
-            id: new Date().getTime(),
-            message: this._state.dialogsPage.newMessage
-        }
-        this._state.dialogsPage.messages.push(newMessagePost);
-        this._state.dialogsPage.newMessage = '';
-        this._callSubscriber();
-    },
-    updateTextMessage(newMessage: string) {
-        this._state.dialogsPage.newMessage = newMessage;
-        this._callSubscriber();
-    },
+    }
+}
+
+export const addPostAC = () => ({type: ADD_POST}) as const
+export const updateNewPostTextAC = (newPostText: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newPostText: newPostText
+    } as const
+}
+export const addMessageAC = () => ({type: ADD_MESSAGE}) as const
+export const updateNewTextMessageAC = (newMessage: string) => {
+    return {
+        type: UPDATE_TEXT_MESSAGE,
+        newMessage: newMessage
+    } as const
 }
 
 export default store;

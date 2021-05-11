@@ -9,17 +9,14 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {FindFriends} from './components/FindFriends/FindFriends';
-import {RootStateType} from "./redux/state";
+import {ActionsTypes, RootStateType} from "./redux/state";
 
 type AppPropsType = {
-    updateNewPostText: (newPostText: string) => void
-    addPost: () => void
     state: RootStateType
-    addMessage: () => void
-    updateTextMessage: (newMessage: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-function App({addPost, updateNewPostText, state, ...props}: AppPropsType) {
+function App({state, dispatch}: AppPropsType) {
 
     return (
         <BrowserRouter>
@@ -30,14 +27,12 @@ function App({addPost, updateNewPostText, state, ...props}: AppPropsType) {
                     <Route render={() =>
                         <Profile
                             profilePage={state.profilePage}
-                            updateNewPostText={updateNewPostText}
-                            addPost={addPost}
+                            dispatch={dispatch}
                         />}
                            exact path="/profile"/>
                     <Route render={() =>
                         <Dialogs
-                            addMessage={props.addMessage}
-                            updateTextMessage={props.updateTextMessage}
+                            dispatch={dispatch}
                             dialogsPage={state.dialogsPage}
                         />}
                            exact path="/dialogs"/>
