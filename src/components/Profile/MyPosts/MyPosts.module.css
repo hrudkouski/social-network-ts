@@ -9,4 +9,14 @@
 .myPostTextarea {
     width: 70%;
     min-height: 50px;
+    outline: none;
+}
+
+.error {
+    border: #A52A2A solid 2px;
+}
+
+.errorText {
+    color: #A52A2A;
+    font-weight: bold;
 }

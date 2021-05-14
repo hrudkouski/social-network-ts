@@ -1,7 +1,8 @@
-import React, {ChangeEvent,KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {ActionsTypes, addPostAC, ProfilePageType, updateNewPostTextAC} from "../../../redux/state";
+import {ActionsTypes, ProfilePageType} from "../../../redux/store";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profile_reducer";
 
 type MyPostsPropsType = {
     profilePage: ProfilePageType
@@ -10,6 +11,8 @@ type MyPostsPropsType = {
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
+    const [errorPostText, setErrorPostText] = useState('')
+
     let postsElements = props.profilePage.posts.map(el =>
         <Post
             key={el.id}
@@ -17,12 +20,17 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             likesCount={el.likesCount}/>);
 
     const addPost = () => {
-        props.dispatch(addPostAC())
+        if (props.profilePage.newPostText.trim() !== '') {
+            props.dispatch(addPostAC())
+        } else {
+            setErrorPostText('Please, write some text...')
+        }
     }
 
     const onKeyPressAddPost = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        setErrorPostText('')
         if (e.ctrlKey) {
-            props.dispatch(addPostAC())
+            addPost()
         }
     }
 
@@ -37,11 +45,13 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                 <div>
                     <textarea
                         onKeyPress={onKeyPressAddPost}
+                        placeholder='Enter your post'
                         onChange={onnPostChange}
                         value={props.profilePage.newPostText}
-                        className={s.myPostTextarea}/>
+                        className={`${s.myPostTextarea} ${errorPostText && s.error}`}/>
                 </div>
                 <div>
+                    {errorPostText && <div className={s.errorText}>{errorPostText}</div>}
                     <button
                         onClick={addPost}>Add post
                     </button>

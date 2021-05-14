@@ -1,7 +1,6 @@
-const ADD_POST = 'ADD_POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-const ADD_MESSAGE = 'ADD_MESSAGE';
-const UPDATE_TEXT_MESSAGE = 'UPDATE_TEXT_MESSAGE';
+import profileReducer, {addPostAC, updateNewPostTextAC} from "./profile_reducer";
+import dialogsReducer, {addMessageAC, updateNewTextMessageAC} from "./dialogs_reducer";
+import sideBarReducer from "./sideBar_reducer";
 
 export type MessageType = {
     id: number
@@ -23,7 +22,7 @@ export type ProfilePageType = {
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessage: string
+    newMessageText: string
 }
 export type SideBarType = {}
 export type RootStateType = {
@@ -83,7 +82,7 @@ let store: StoreType = {
                 {id: 5, message: 'How do you do?'},
                 {id: 6, message: 'I\'m fine'},
             ],
-            newMessage: ''
+            newMessageText: ''
         },
         sideBar: {}
     },
@@ -97,50 +96,12 @@ let store: StoreType = {
         return this._state;
     },
     dispatch(action: ActionsTypes) {
-        switch (action.type) {
-            case ADD_POST:
-                const newPost: PostType = {
-                    id: new Date().getTime(),
-                    message: this._state.profilePage.newPostText,
-                    likesCount: 19
-                }
-                this._state.profilePage.posts.push(newPost);
-                this._state.profilePage.newPostText = '';
-                this._callSubscriber();
-                break;
-            case UPDATE_NEW_POST_TEXT:
-                this._state.profilePage.newPostText = action.newPostText;
-                this._callSubscriber();
-                break;
-            case ADD_MESSAGE:
-                const newMessagePost: MessageType = {
-                    id: new Date().getTime(),
-                    message: this._state.dialogsPage.newMessage
-                }
-                this._state.dialogsPage.messages.push(newMessagePost);
-                this._state.dialogsPage.newMessage = '';
-                this._callSubscriber();
-                break;
-            case UPDATE_TEXT_MESSAGE:
-                this._state.dialogsPage.newMessage = action.newMessage;
-                this._callSubscriber();
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        // profileReducer(this._state.profilePage, action);
+        dialogsReducer(this._state.dialogsPage, action);
+        sideBarReducer(this._state.sideBar, action);
+        this._callSubscriber();
     }
-}
-
-export const addPostAC = () => ({type: ADD_POST}) as const
-export const updateNewPostTextAC = (newPostText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newPostText: newPostText
-    } as const
-}
-export const addMessageAC = () => ({type: ADD_MESSAGE}) as const
-export const updateNewTextMessageAC = (newMessage: string) => {
-    return {
-        type: UPDATE_TEXT_MESSAGE,
-        newMessage: newMessage
-    } as const
 }
 
 export default store;
