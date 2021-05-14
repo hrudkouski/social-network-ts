@@ -97,9 +97,8 @@ let store: StoreType = {
     },
     dispatch(action: ActionsTypes) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
-        // profileReducer(this._state.profilePage, action);
-        dialogsReducer(this._state.dialogsPage, action);
-        sideBarReducer(this._state.sideBar, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sideBar = sideBarReducer(this._state.sideBar, action);
         this._callSubscriber();
     }
 }

@@ -11,7 +11,29 @@ export const updateNewPostTextAC = (newPostText: string) => {
     } as const
 }
 
-export const profileReducer = (state: ProfilePageType, action: ActionsTypes) => {
+let initialState = {
+    posts: [
+        {
+            id: 1,
+            message: 'Перебираемые (или итерируемые) объекты – это...',
+            likesCount: 9
+        },
+        {
+            id: 2,
+            message: 'Конечно же, сами массивы являются перебираемыми...',
+            likesCount: 19
+        },
+        {
+            id: 3,
+            message: 'Если объект не является массивом, но представляет...',
+            likesCount: 3
+        },
+    ],
+    newPostText: '',
+};
+
+
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {

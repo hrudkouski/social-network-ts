@@ -11,7 +11,27 @@ export const updateNewTextMessageAC = (newMessageText: string) => {
     } as const
 }
 
-const dialogsReducer = (state: DialogPageType, action: ActionsTypes) => {
+let initialState = {
+    dialogs: [
+        {id: 1, name: 'Nikita'},
+        {id: 2, name: 'Masha'},
+        {id: 3, name: 'Sasha'},
+        {id: 4, name: 'Kirill'},
+        {id: 5, name: 'Vasil'},
+        {id: 6, name: 'Jon'},
+    ],
+    messages: [
+        {id: 1, message: 'Hi! how are you?'},
+        {id: 2, message: 'Hi! How old are you?'},
+        {id: 3, message: 'Hi! Where are you from?'},
+        {id: 4, message: 'Hello! I don\'t need books'},
+        {id: 5, message: 'How do you do?'},
+        {id: 6, message: 'I\'m fine'},
+    ],
+    newMessageText: ''
+};
+
+const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessagePost: MessageType = {
