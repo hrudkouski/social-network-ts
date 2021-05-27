@@ -11,7 +11,7 @@ export const updateNewPostTextAC = (newPostText: string) => {
     } as const
 }
 
-let initialState = {
+const initialState = {
     posts: [
         {
             id: 1,
@@ -33,7 +33,7 @@ let initialState = {
 };
 
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {

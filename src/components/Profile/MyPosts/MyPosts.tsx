@@ -1,12 +1,14 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {ActionsTypes, ProfilePageType} from "../../../redux/store";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/profile_reducer";
+import {ProfilePageType} from "../../../redux/store";
 
 type MyPostsPropsType = {
+    // profilePage: ProfilePageType
+    // dispatch: (action: ActionsTypes) => void
+    addPost: () => void
+    updateNewPostText: (newPostText: string) => void
     profilePage: ProfilePageType
-    dispatch: (action: ActionsTypes) => void
 }
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -21,7 +23,8 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const addPost = () => {
         if (props.profilePage.newPostText.trim() !== '') {
-            props.dispatch(addPostAC())
+            props.addPost()
+            // props.dispatch(addPostAC())
         } else {
             setErrorPostText('Please, write some text...')
         }
@@ -35,7 +38,8 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     }
 
     const onnPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextAC(e.currentTarget.value))
+        props.updateNewPostText(e.currentTarget.value)
+        // props.dispatch(updateNewPostTextAC(e.currentTarget.value))
     }
 
     return (
