@@ -1,28 +1,10 @@
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import store from "./redux/redux-store";
+import store, {RootStateType} from "./redux/redux-store";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import {RootStateType} from "./redux/store";
 
-// 1 variant
-// export let _callSubscriber = () => {
-//     ReactDOM.render(
-//         <React.StrictMode>
-//             <App
-//                 state={store.getState()}
-//                 dispatch={store.dispatch.bind(store)}
-//             />
-//         </React.StrictMode>,
-//         document.getElementById('root')
-//     );
-// }
-//
-// _callSubscriber();
-// store.subscribe(_callSubscriber)
-
-// 2 variant
 export let _callSubscriber = (state: RootStateType) => {
     ReactDOM.render(
         <React.StrictMode>

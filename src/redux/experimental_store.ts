@@ -37,14 +37,13 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-
 export type ActionsTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewTextMessageAC>;
 
-let store: StoreType = {
+export const experimental_store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -104,4 +103,4 @@ let store: StoreType = {
     }
 }
 
-export default store;
+console.log(experimental_store)

@@ -9,13 +9,12 @@ import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {FindFriends} from './components/FindFriends/FindFriends';
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {StoreType} from "./redux/redux-store";
-import {ActionsTypes, RootStateType} from "./redux/store";
+import {ActionsTypes, RootStateType, StoreType} from "./redux/redux-store";
 
 type AppPropsType = {
     state: RootStateType
     dispatch: (action: ActionsTypes) => void
-    store:  StoreType
+    store: StoreType
 }
 
 function App({state, dispatch, ...props}: AppPropsType) {
@@ -28,18 +27,16 @@ function App({state, dispatch, ...props}: AppPropsType) {
                 <div className={s.AppContent}>
                     <Route render={() =>
                         <Profile
-                            // profilePage={state.profilePage}
-                            // dispatch={dispatch}
                             store={props.store}
                         />}
-                           exact path="/profile"/>
+                           exact path="/profile"
+                    />
                     <Route render={() =>
                         <DialogsContainer
-                            // dispatch={dispatch}
-                            // dialogsPage={state.dialogsPage}
                             store={props.store}
                         />}
-                           exact path="/dialogs"/>
+                           exact path="/dialogs"
+                    />
                     <Route component={News} path="/news"/>
                     <Route component={Music} path="/music"/>
                     <Route component={Settings} path="/settings"/>

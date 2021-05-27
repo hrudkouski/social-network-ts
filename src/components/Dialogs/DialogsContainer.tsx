@@ -4,8 +4,6 @@ import { StoreType } from '../../redux/redux-store';
 import {Dialogs} from "./Dialogs";
 
 type DialogsPropsType = {
-    // dialogsPage: DialogPageType
-    // dispatch: (action: ActionsTypes) => void
     store: StoreType
 }
 

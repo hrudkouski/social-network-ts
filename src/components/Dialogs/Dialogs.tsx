@@ -2,11 +2,9 @@ import React, {ChangeEvent} from 'react'
 import s from './Dialogs.module.css'
 import {DialogsItem} from "./DialogItem/DialogsItem";
 import {Message} from "./Message/Message";
-import {DialogPageType} from "../../redux/store";
+import {DialogPageType} from "../../redux/redux-store";
 
 type DialogsPropsType = {
-    // dialogsPage: DialogPageType
-    // dispatch: (action: ActionsTypes) => void
     updateNewTextMessage: (newText: string) => void
     addMessage: () => void
     dialogsPage: DialogPageType
@@ -29,12 +27,10 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         />);
 
     const addMessageHandler = () => {
-        // props.dispatch(addMessageAC())
         props.addMessage()
     };
 
     const changeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        // props.dispatch(updateNewTextMessageAC(e.currentTarget.value))
         const newText = e.currentTarget.value;
         props.updateNewTextMessage(newText)
     };
