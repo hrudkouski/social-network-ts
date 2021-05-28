@@ -1,5 +1,3 @@
-import {ActionsTypes, DialogPageType} from "./redux-store";
-
 const ADD_MESSAGE = 'ADD_MESSAGE';
 const UPDATE_TEXT_MESSAGE = 'UPDATE_TEXT_MESSAGE';
 
@@ -11,8 +9,16 @@ export type DialogType = {
     id: number
     name: string
 }
+export type DialogPageType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    newMessageText: string
+}
+export type addMessageAT = ReturnType<typeof addMessageAC>
+export type updateNewTextMessageAT = ReturnType<typeof updateNewTextMessageAC>
+export type ActionsTypesDR = addMessageAT | updateNewTextMessageAT;
 
-let initialState = {
+let initialState: DialogPageType = {
     dialogs: [
         {id: 1, name: 'Nikita'},
         {id: 2, name: 'Masha'},
@@ -20,7 +26,7 @@ let initialState = {
         {id: 4, name: 'Kirill'},
         {id: 5, name: 'Vasil'},
         {id: 6, name: 'Jon'},
-    ],
+    ] as Array<DialogType>,
     messages: [
         {id: 1, message: 'Hi! how are you?'},
         {id: 2, message: 'Hi! How old are you?'},
@@ -28,11 +34,11 @@ let initialState = {
         {id: 4, message: 'Hello! I don\'t need books'},
         {id: 5, message: 'How do you do?'},
         {id: 6, message: 'I\'m fine'},
-    ],
-    newMessageText: ''
+    ] as Array<MessageType>,
+    newMessageText: '' as string
 };
 
-const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes): DialogPageType => {
+const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypesDR): DialogPageType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessagePost: MessageType = {

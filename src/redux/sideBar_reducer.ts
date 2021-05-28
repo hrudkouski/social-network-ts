@@ -1,8 +1,10 @@
-import {ActionsTypes, SideBarType} from "./redux-store";
+import {ActionsTypesDR} from "./dialogs_reducer"; // Refactoring
 
-let initialState = {};
+export type SideBarType = {}
 
-export const sideBarReducer = (state: SideBarType = initialState, action: ActionsTypes): SideBarType => {
+let initialState: SideBarType = {};
+
+export const sideBarReducer = (state: SideBarType = initialState, action: ActionsTypesDR): SideBarType => {
     switch (action.type) {
         default:
             return state;

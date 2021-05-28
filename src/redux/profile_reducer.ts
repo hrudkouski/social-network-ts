@@ -1,5 +1,3 @@
-import {ActionsTypes, ProfilePageType} from "./redux-store";
-
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 
@@ -8,8 +6,15 @@ export type PostType = {
     message: string,
     likesCount: number
 }
+export type ProfilePageType = {
+    posts: Array<PostType>
+    newPostText: string
+}
+export type addPostAT = ReturnType<typeof addPostAC>
+export type updateNewPostTextAT = ReturnType<typeof updateNewPostTextAC>
+export type ActionsTypesPR = addPostAT | updateNewPostTextAT;
 
-const initialState = {
+const initialState: ProfilePageType = {
     posts: [
         {
             id: 1,
@@ -26,12 +31,12 @@ const initialState = {
             message: 'Если объект не является массивом, но представляет...',
             likesCount: 3
         },
-    ],
-    newPostText: '',
+    ] as Array<PostType>,
+    newPostText: '' as string,
 };
 
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypesPR): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -52,7 +57,9 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 
 export default profileReducer;
 
-export const addPostAC = () => ({type: ADD_POST}) as const
+export const addPostAC = () => {
+    return {type: ADD_POST} as const
+}
 export const updateNewPostTextAC = (newPostText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,

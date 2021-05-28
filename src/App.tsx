@@ -9,15 +9,8 @@ import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {FindFriends} from './components/FindFriends/FindFriends';
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {ActionsTypes, RootStateType, StoreType} from "./redux/redux-store";
 
-type AppPropsType = {
-    state: RootStateType
-    dispatch: (action: ActionsTypes) => void
-    store: StoreType
-}
-
-function App({state, dispatch, ...props}: AppPropsType) {
+function App() {
 
     return (
         <BrowserRouter>
@@ -26,15 +19,11 @@ function App({state, dispatch, ...props}: AppPropsType) {
                 <Navbar/>
                 <div className={s.AppContent}>
                     <Route render={() =>
-                        <Profile
-                            store={props.store}
-                        />}
+                        <Profile/>}
                            exact path="/profile"
                     />
                     <Route render={() =>
-                        <DialogsContainer
-                            store={props.store}
-                        />}
+                        <DialogsContainer/>}
                            exact path="/dialogs"
                     />
                     <Route component={News} path="/news"/>
