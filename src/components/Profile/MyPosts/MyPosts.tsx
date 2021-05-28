@@ -1,23 +1,21 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import { ProfilePageType } from '../../../redux/profile_reducer';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
+import {MyPostPropsType} from "./MyPostsContainer";
 
-type MyPostsPropsType = {
-    addPost: () => void
-    updateNewPostText: (newPostText: string) => void
-    profilePage: ProfilePageType
-}
-
-export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+export const MyPosts: React.FC<MyPostPropsType> = (props) => {
 
     const [errorPostText, setErrorPostText] = useState('')
 
-    let postsElements = props.profilePage.posts.map(el =>
-        <Post
-            key={el.id}
-            message={el.message}
-            likesCount={el.likesCount}/>);
+    let postsElements = props.profilePage.posts.map(el => {
+            return (
+                <Post
+                    key={el.id}
+                    message={el.message}
+                    likesCount={el.likesCount}/>
+            )
+        }
+    );
 
     const addPost = () => {
         if (props.profilePage.newPostText.trim() !== '') {
