@@ -9,6 +9,7 @@ import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {FindFriends} from './components/FindFriends/FindFriends';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 function App() {
 
@@ -25,6 +26,10 @@ function App() {
                     <Route render={() =>
                         <DialogsContainer/>}
                            exact path="/dialogs"
+                    />
+                    <Route render={() =>
+                        <UsersContainer/>}
+                           exact path="/users"
                     />
                     <Route component={News} path="/news"/>
                     <Route component={Music} path="/music"/>
