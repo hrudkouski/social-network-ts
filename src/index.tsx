@@ -1,29 +1,18 @@
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import store, {AppStateType} from "./redux/redux-store";
+import store from "./redux/redux-store";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import {Provider} from 'react-redux';
 
-
-export let _callSubscriber = (state: AppStateType) => {
-    ReactDOM.render(
-        <React.StrictMode>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </React.StrictMode>,
-        document.getElementById('root')
-    );
-}
-
-_callSubscriber(store.getState());
-
-store.subscribe(() => {
-    let state = store.getState();
-    _callSubscriber(state)
-})
+ReactDOM.render(
+    <React.StrictMode>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </React.StrictMode>, document.getElementById('root')
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
