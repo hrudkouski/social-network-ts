@@ -1,35 +1,14 @@
 import React from 'react'
 import s from './Users.module.css'
 import {UsersPropsType} from "./UsersContainer";
+import axios from "axios";
+import avatarPhoto from '../../assets/images/avatar.png'
 
 export const Users = (props: UsersPropsType) => {
     if (props.userPage.users.length === 0) {
-        props.setUsers([
-                {
-                    id: 1,
-                    photoURL: 'https://icon-library.com/images/avatar-icon-free/avatar-icon-free-10.jpg',
-                    followed: false,
-                    fullName: 'Dmitriy',
-                    status: 'I am a bos',
-                    location: {city: 'Minsk', country: 'Belarus'}
-                },
-                {
-                    id: 2,
-                    photoURL: 'https://icon-library.com/images/avatar-icon-free/avatar-icon-free-10.jpg',
-                    followed: true,
-                    fullName: 'Ivan',
-                    status: 'Hi! How are you',
-                    location: {city: 'Kiev', country: 'Ukraine'}
-                },
-                {
-                    id: 3,
-                    photoURL: 'https://icon-library.com/images/avatar-icon-free/avatar-icon-free-10.jpg',
-                    followed: false,
-                    fullName: 'Mike',
-                    status: 'What are you doing now?',
-                    location: {city: 'Moscow', country: 'Russia'}
-                }
-            ]
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+                props.setUsers(response.data.items)
+            }
         )
     }
 
@@ -48,7 +27,7 @@ export const Users = (props: UsersPropsType) => {
                     <div>
                         <img
                             className={s.photo}
-                            src={el.photoURL}
+                            src={el.photos.small !== null ? el.photos.small : avatarPhoto}
                             alt="avatar"
                         />
                     </div>
@@ -60,12 +39,12 @@ export const Users = (props: UsersPropsType) => {
                 </span>
                 <span>
                     <span>
-                        <div>{el.fullName}</div>
+                        <div>{el.name}</div>
                         <div>{el.status}</div>
                     </span>
                     <span>
-                        <div>{el.location.country}</div>
-                        <div>{el.location.city}</div>
+                        <div>el.location.country</div>
+                        <div>el.location.city</div>
                     </span>
                 </span>
             </div>

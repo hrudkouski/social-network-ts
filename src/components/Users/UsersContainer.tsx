@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         unFollowUser: (userID: number) => {
             dispatch(unFollowAC(userID))
         },
-        setUsers: (users: Array<UserType>) => {
+        setUsers: (users: any) => {
             dispatch(setUsersAC(users))
         }
     }
