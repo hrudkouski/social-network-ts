@@ -14,8 +14,7 @@ import {UsersPropsType} from "./UsersContainer";
 
 export class Users extends React.Component<UsersPropsType> {
 
-    constructor(props: UsersPropsType) {
-        super(props);
+    componentDidMount() {
         axios.get('https://social-network.samuraijs.com/api/1.0/users')
             .then(response => {
                 this.props.setUsers(response.data.items)
@@ -46,7 +45,7 @@ export class Users extends React.Component<UsersPropsType> {
                                 }}>Follow</button>}
                     </div>
                 </span>
-                        <span>
+                    <span>
                     <span>
                         <div>{el.name}</div>
                         <div>{el.status}</div>
@@ -56,9 +55,8 @@ export class Users extends React.Component<UsersPropsType> {
                         <div>el.location.city</div>
                     </span>
                 </span>
-                    </div>
-                )
-            })
+                </div>)
+            }
         </div>;
     }
 }
