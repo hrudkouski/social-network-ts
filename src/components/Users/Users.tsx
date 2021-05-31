@@ -1,43 +1,52 @@
 import React from 'react'
-import s from './Users.module.css'
-import {UsersPropsType} from "./UsersContainer";
+import s from "./Users.module.css";
+import avatarPhoto from "../../assets/images/avatar.png";
 import axios from "axios";
-import avatarPhoto from '../../assets/images/avatar.png'
+// import {UsersPageType, UserType} from "../../redux/users_reducer";
+import {UsersPropsType} from "./UsersContainer";
 
-export const Users = (props: UsersPropsType) => {
-    if (props.userPage.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                props.setUsers(response.data.items)
-            }
-        )
+// type UsersClassPropsType = {
+//     userPage: UsersPageType
+//     followUser: (userID: number) => void
+//     unFollowUser: (userID: number) => void
+//     setUsers: (users: Array<UserType>) => void
+// }
+
+export class Users extends React.Component<UsersPropsType> {
+
+    constructor(props: UsersPropsType) {
+        super(props);
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
     }
 
-    const users = props.userPage.users.map(el => {
-
-        const followCallback = () => {
-            props.followUser(el.id)
-        }
-        const unFollowCallback = () => {
-            props.unFollowUser(el.id)
-        }
-
-        return (
-            <div key={el.id}>
+    render() {
+        return <div className={s.dialogs}>
+            {
+                this.props.userPage.users.map((el) => <div key={el.id}>
                 <span>
                     <div>
                         <img
                             className={s.photo}
-                            src={el.photos.small !== null ? el.photos.small : avatarPhoto}
+                            src={el.photos.small !== null
+                                ? el.photos.small
+                                : avatarPhoto}
                             alt="avatar"
                         />
                     </div>
                     <div>
                             {el.followed
-                                ? <button onClick={unFollowCallback}>UnFollow</button>
-                                : <button onClick={followCallback}>Follow</button>}
+                                ? <button onClick={() => {
+                                    this.props.unFollowUser(el.id)
+                                }}>UnFollow</button>
+                                : <button onClick={() => {
+                                    this.props.followUser(el.id)
+                                }}>Follow</button>}
                     </div>
                 </span>
-                <span>
+                        <span>
                     <span>
                         <div>{el.name}</div>
                         <div>{el.status}</div>
@@ -47,13 +56,9 @@ export const Users = (props: UsersPropsType) => {
                         <div>el.location.city</div>
                     </span>
                 </span>
-            </div>
-        )
-    })
-
-    return (
-        <div className={s.dialogs}>
-            {users}
-        </div>
-    )
+                    </div>
+                )
+            })
+        </div>;
+    }
 }
