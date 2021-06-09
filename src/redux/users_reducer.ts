@@ -30,8 +30,8 @@ export type UsersActionTypes = FollowAT | UnFollowAT | SetUsersAT | SetCurrentPa
 
 let initialState: UsersPageType = {
     users: [] as Array<UserType>,
-    pageSize: 500,
-    totalUserCount: 0,
+    pageSize: 10,
+    totalUserCount: 5,
     currentPage: 1,
 };
 
