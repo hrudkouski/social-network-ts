@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import s from "./Users.module.css";
 import avatarPhoto from "../../assets/images/avatar.png";
 import {UsersPageType} from "../../redux/users_reducer";
@@ -17,10 +17,10 @@ export const Users = (props: UsersPresentType) => {
 
     // const pagesCount = Math.ceil(props.totalUserCount / props.pageSize);
 
-    const pages = [1,2,3,4,5,6,7,8,9];
-    // for (let i = 1; i <= pagesCount; i++) {
-    //     pages.push(i);
-    // }
+    const pages = []
+    for (let i = 1; i <= 30; i++) {
+        pages.push(i)
+    }
 
     return (
         <div>
