@@ -32,9 +32,9 @@ export const Users = (props: UsersPresentType) => {
                         return (
                             <span
                                 onClick={setCurrentPageHandler}
-                                className={el === props.currentPage
+                                className={`${el === props.currentPage
                                     ? s.selectedPage
-                                    : ''}
+                                    : s.page} ${s.page}` }
                                 key={index}>
                                 {el}
                             </span>

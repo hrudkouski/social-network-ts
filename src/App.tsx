@@ -13,6 +13,8 @@ import UsersContainer from "./components/Users/UsersContainerApi";
 
 function App() {
 
+    // @ts-ignore
+    // @ts-ignore
     return (
         <BrowserRouter>
             <div className={s.AppWrapper}>
