@@ -80,8 +80,6 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
     }
 }
 
-export default usersReducer;
-
 export const followUser = (userID: number) => ({type: FOLLOW, userID} as const)
 export const unFollowUser = (userID: number) => ({type: UNFOLLOW, userID} as const)
 export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as const)

@@ -12,5 +12,6 @@
 .selectedPage {
     font-weight: bold;
     opacity: 1;
-    color: #fc0202;
+    color: #59fc02;
+    font-size: 20px;
 }

@@ -1,13 +1,18 @@
-.AppLogo {
-    height: 10vmin;
-    pointer-events: none;
+.profileInfo img {
+    padding-left: 15px;
+    margin: 20px;
 }
 
-.descriptionBlock {
-    margin-left: 25px;
+.description {
+    padding: 15px;
 }
 
-.descriptionBlock img {
-    width: 70px;
-    border-radius: 30px;
+.aboutMe {
+    color: #ff0091;
+    font-weight: bold;
+}
+
+.profileInfo {
+    display: flex;
+    background-color: rgba(3, 170, 122, 0.73);
 }

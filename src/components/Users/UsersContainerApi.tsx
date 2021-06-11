@@ -42,7 +42,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-export class UsersContainer extends React.Component<UsersPropsType> {
+class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
