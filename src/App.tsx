@@ -21,7 +21,7 @@ function App() {
                 <div className={s.AppContent}>
                     <Route render={() =>
                         <ProfileContainer/>}
-                           path="/profile"
+                           path="/profile/:userID?"
                     />
                     <Route render={() =>
                         <DialogsContainer/>}

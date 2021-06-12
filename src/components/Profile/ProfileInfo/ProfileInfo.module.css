@@ -1,5 +1,4 @@
 .profileInfo img {
-    padding-left: 15px;
     margin: 20px;
 }
 
@@ -7,12 +6,19 @@
     padding: 15px;
 }
 
-.aboutMe {
-    color: #ff0091;
+.titleText {
+    color: #17010d;
     font-weight: bold;
 }
 
 .profileInfo {
     display: flex;
     background-color: rgba(3, 170, 122, 0.73);
+}
+
+.contactsIcons img {
+    width: 40px;
+    height: 40px;
+    padding-left: 5px;
+    margin: 0;
 }
