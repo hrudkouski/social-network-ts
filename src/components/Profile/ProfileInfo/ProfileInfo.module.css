@@ -13,12 +13,12 @@
 
 .profileInfo {
     display: flex;
-    background-color: rgba(3, 170, 122, 0.73);
+    background-color: rgba(237, 245, 8, 0.95);
 }
 
 .contactsIcons img {
-    width: 40px;
-    height: 40px;
-    padding-left: 5px;
+    width: 30px;
+    height: 30px;
+    padding-right: 10px;
     margin: 0;
 }

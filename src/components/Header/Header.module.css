@@ -7,3 +7,22 @@
     height: 7vmin;
     pointer-events: none;
 }
+
+.loginBlock {
+    float: right;
+    margin-right: 20px;
+}
+
+.userName {
+    color: #fc0202;
+    font-weight: bold;
+}
+
+.loginTitle {
+    color: white;
+}
+
+.loginBlock a {
+    font-weight: bold;
+    color: white;
+}

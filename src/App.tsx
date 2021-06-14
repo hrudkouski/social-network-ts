@@ -1,7 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import s from '../src/App.module.css'
-import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
@@ -10,13 +9,14 @@ import {FindFriends} from './components/FindFriends/FindFriends';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainerApi";
 import ProfileContainer from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
 
 function App() {
 
     return (
         <BrowserRouter>
             <div className={s.AppWrapper}>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className={s.AppContent}>
                     <Route render={() =>
