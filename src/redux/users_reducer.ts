@@ -1,10 +1,12 @@
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+// Actions
+const FOLLOW = 'social-network-ts/users_reducer/FOLLOW';
+const UNFOLLOW = 'social-network-ts/users_reducer/UNFOLLOW';
+const SET_USERS = 'social-network-ts/users_reducer/SET_USERS';
+const SET_CURRENT_PAGE = 'social-network-ts/users_reducer/SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'social-network-ts/users_reducer/SET_TOTAL_USERS_COUNT';
+const TOGGLE_IS_FETCHING = 'social-network-ts/users_reducer/TOGGLE_IS_FETCHING';
 
+//Types
 export type UserType = {
     name: string
     id: number
@@ -31,6 +33,7 @@ export type SetTotalUsersCountAT = ReturnType<typeof setTotalUsersCount>
 export type ToggleIsFetchingAT = ReturnType<typeof toggleIsFetching>
 export type UsersActionTypes = FollowAT | UnFollowAT | SetUsersAT | SetCurrentPageAT | SetTotalUsersCountAT | ToggleIsFetchingAT;
 
+//Initial State
 let initialState: UsersPageType = {
     users: [] as Array<UserType>,
     pageSize: 30,
@@ -39,6 +42,7 @@ let initialState: UsersPageType = {
     isFetching: false,
 };
 
+// Reducer
 export const usersReducer = (state: UsersPageType = initialState, action: UsersActionTypes): UsersPageType => {
     switch (action.type) {
         case FOLLOW:
@@ -80,6 +84,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
     }
 }
 
+// Action Creators
 export const followUser = (userID: number) => ({type: FOLLOW, userID} as const)
 export const unFollowUser = (userID: number) => ({type: UNFOLLOW, userID} as const)
 export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as const)

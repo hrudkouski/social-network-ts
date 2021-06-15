@@ -3,7 +3,7 @@ import s from "./Users.module.css";
 import avatarPhoto from "../../assets/images/avatar.png";
 import {UsersPageType} from "../../redux/users_reducer";
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
+import {usersApi} from "../../api/api";
 
 type UsersPresentType = {
     totalUserCount: number
@@ -25,8 +25,7 @@ export const Users = (props: UsersPresentType) => {
     }
 
     return (
-        <div>
-
+        <div className={s.wrapper}>
             <div>
                 {
                     pages.map((el, index) => {
@@ -44,9 +43,9 @@ export const Users = (props: UsersPresentType) => {
                     })
                 }
             </div>
-
             {
-                props.userPage.users.map((el) => <div key={el.id}>
+                props.userPage.users.map((el) => <div
+                    className={s.userProfile} key={el.id}>
                 <span>
                     <div>
                         <NavLink to={"/profile/" + el.id}>
@@ -58,40 +57,34 @@ export const Users = (props: UsersPresentType) => {
                                 alt="avatar"
                             />
                         </NavLink>
-
                     </div>
                     <div>
                             {el.followed
-                                ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${el.id}`, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': '3af7a44d-0a6b-4bf7-b34b-b5730fa5756f',
-                                        }
-                                    })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
-                                                props.unFollowUser(el.id)
-                                            }
-                                        })
-                                }}>UnFollow</button>
-
-                                : <button onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${el.id}`, {}, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': '3af7a44d-0a6b-4bf7-b34b-b5730fa5756f',
-                                        }
-                                    })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
-                                                props.followUser(el.id)
-                                            }
-                                        })
-                                }}>Follow</button>}
+                                ? <button
+                                    className={s.unFollow}
+                                    onClick={() => {
+                                        usersApi.unFollow(el.id)
+                                            .then(data => {
+                                                if (data.resultCode === 0) {
+                                                    props.unFollowUser(el.id)
+                                                }
+                                            })
+                                    }}
+                                >UnFollow</button>
+                                : <button
+                                    className={s.follow}
+                                    onClick={() => {
+                                        usersApi.follow(el.id)
+                                            .then(data => {
+                                                    if (data.resultCode === 0) {
+                                                        props.followUser(el.id)
+                                                    }
+                                                }
+                                            )
+                                    }}
+                                >Follow</button>}
                     </div>
                 </span>
-                    <span>
                     <span>
                         <div>{el.name}</div>
                         <div>{el.status}</div>
@@ -100,7 +93,6 @@ export const Users = (props: UsersPresentType) => {
                         <div>el.location.country</div>
                         <div>el.location.city</div>
                     </span>
-                </span>
                 </div>)
             }
         </div>
