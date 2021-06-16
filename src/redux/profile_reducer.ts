@@ -1,7 +1,9 @@
-const ADD_POST = 'ADD_POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
+// Actions
+const ADD_POST = 'social-network-ts/profile_reducer/ADD_POST';
+const UPDATE_NEW_POST_TEXT = 'social-network-ts/profile_reducer/UPDATE_NEW_POST_TEXT';
+const SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE';
 
+//Types
 export type PostType = {
     id: number,
     message: string,
@@ -33,13 +35,12 @@ export type ProfilePageType = {
     newPostText: string
     profileUser: ProfileUserType | null
 }
-
-export type addPostAT = ReturnType<typeof addPostAC>
-export type updateNewPostTextAT = ReturnType<typeof updateNewPostTextAC>
+export type addPostAT = ReturnType<typeof addPost>
+export type updateNewPostTextAT = ReturnType<typeof updateNewPostText>
 export type setUsersProfileAT = ReturnType<typeof setUsersProfile>
-
 export type ActionsTypesPR = addPostAT | updateNewPostTextAT | setUsersProfileAT;
 
+//Initial State
 const initialState: ProfilePageType = {
     posts: [
         {
@@ -62,6 +63,7 @@ const initialState: ProfilePageType = {
     profileUser: null as null | ProfileUserType,
 };
 
+// Reducer
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypesPR): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
@@ -90,10 +92,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
     }
 }
 
-export const addPostAC = () => {
+// Action Creators
+export const addPost = () => {
     return {type: ADD_POST} as const
 }
-export const updateNewPostTextAC = (newPostText: string) => {
+export const updateNewPostText = (newPostText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newPostText: newPostText,

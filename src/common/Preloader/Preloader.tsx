@@ -10,5 +10,6 @@ export const Preloader = () => {
         <div/>
         <div/>
         <div/>
+        <div/>
     </div>
 }

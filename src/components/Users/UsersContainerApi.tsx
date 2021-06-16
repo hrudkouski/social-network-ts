@@ -4,7 +4,7 @@ import {
     followUser,
     setCurrentPage,
     setTotalUsersCount,
-    setUsers,
+    setUsers, toggleFollowingProgress,
     toggleIsFetching,
     unFollowUser,
     UsersPageType,
@@ -21,6 +21,7 @@ type MapStatePropsType = {
     totalUserCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 type MapDispatchToPropsType = {
     followUser: (userID: number) => void
@@ -29,6 +30,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (progress: boolean, userID: number) => void
 }
 export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
 
@@ -38,12 +40,12 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUserCount: state.usersPage.totalUserCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
 class UsersContainer extends React.Component<UsersPropsType> {
-
     componentDidMount() {
         this.props.toggleIsFetching(true)
         usersApi.getUsers(this.props.currentPage).then(data => {
@@ -52,7 +54,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 this.props.setTotalUsersCount(data.totalCount)
             })
     }
-
     onPageChanged = (pageNumber: number) => {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(pageNumber);
@@ -61,7 +62,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 this.props.setUsers(data.items)
             })
     }
-
     render() {
         return <>
             {this.props.isFetching && <Preloader/>}
@@ -73,12 +73,14 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 userPage={this.props.userPage}
                 followUser={this.props.followUser}
                 unFollowUser={this.props.unFollowUser}
+                toggleFollowingProgress={this.props.toggleFollowingProgress}
+                followingInProgress={this.props.followingInProgress}
             />
         </>
     }
 }
 
 export default connect(mapStateToProps, {
-    followUser, unFollowUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching,
+    followUser, toggleFollowingProgress, unFollowUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching,
 })(UsersContainer);
 

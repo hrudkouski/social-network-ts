@@ -10,6 +10,7 @@ import instagramSVG from '../../../assets/icons/instagram.png';
 import youtubeSVG from '../../../assets/icons/youtube.png';
 import gitHubeSVG from '../../../assets/icons/github.png';
 import gmailSVG from '../../../assets/icons/gmail.png';
+import avatarPhoto from "../../../assets/images/avatar.png";
 
 
 export type ProfileInfoType = {
@@ -24,7 +25,7 @@ export const ProfileInfo = (props: ProfileInfoType) => {
     return (
         <div className={s.profileInfo}>
             <div className={s.description}>
-                <img alt={'avatar'} src={props.profileUser.photos.large}/>
+                <img alt={'avatar'} src={props.profileUser.photos.large ? props.profileUser.photos.large : avatarPhoto}/>
                 <div>
                     <span className={s.titleText}>Full Name: </span>
                     {props.profileUser.fullName}

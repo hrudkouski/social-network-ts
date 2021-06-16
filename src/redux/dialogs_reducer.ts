@@ -1,6 +1,8 @@
-const ADD_MESSAGE = 'ADD_MESSAGE';
-const UPDATE_TEXT_MESSAGE = 'UPDATE_TEXT_MESSAGE';
+// Actions
+const ADD_MESSAGE = 'social-network-ts/dialogs_reducer/ADD_MESSAGE';
+const UPDATE_TEXT_MESSAGE = 'social-network-ts/dialogs_reducer/UPDATE_TEXT_MESSAGE';
 
+//Types
 export type MessageType = {
     id: number
     message: string
@@ -14,10 +16,11 @@ export type DialogPageType = {
     messages: Array<MessageType>
     newMessageText: string
 }
-export type addMessageAT = ReturnType<typeof addMessageAC>
-export type updateNewTextMessageAT = ReturnType<typeof updateNewTextMessageAC>
+export type addMessageAT = ReturnType<typeof addMessage>
+export type updateNewTextMessageAT = ReturnType<typeof updateNewTextMessage>
 export type ActionsTypesDR = addMessageAT | updateNewTextMessageAT;
 
+//Initial State
 let initialState: DialogPageType = {
     dialogs: [
         {id: 1, name: 'Nikita'},
@@ -38,8 +41,8 @@ let initialState: DialogPageType = {
     newMessageText: '' as string
 };
 
-const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypesDR): DialogPageType => {
-
+// Reducer
+export const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypesDR): DialogPageType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessagePost: MessageType = {
@@ -61,10 +64,9 @@ const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTyp
     }
 }
 
-export default dialogsReducer;
-
-export const addMessageAC = () => ({type: ADD_MESSAGE}) as const
-export const updateNewTextMessageAC = (newMessageText: string) => {
+// Action Creators
+export const addMessage = () => ({type: ADD_MESSAGE}) as const
+export const updateNewTextMessage = (newMessageText: string) => {
     return {
         type: UPDATE_TEXT_MESSAGE,
         newMessageText: newMessageText

@@ -1,5 +1,7 @@
 .profileInfo img {
     margin: 20px;
+    width: 300px;
+    height: 300px;
 }
 
 .description {

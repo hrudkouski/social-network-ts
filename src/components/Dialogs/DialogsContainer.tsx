@@ -1,4 +1,4 @@
-import {addMessageAC, DialogPageType, updateNewTextMessageAC} from "../../redux/dialogs_reducer";
+import {addMessage, DialogPageType, updateNewTextMessage} from "../../redux/dialogs_reducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -22,10 +22,10 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         updateNewTextMessage: (newText: string) => {
-            dispatch(updateNewTextMessageAC(newText))
+            dispatch(updateNewTextMessage(newText))
         },
         addMessage: () => {
-            dispatch(addMessageAC())
+            dispatch(addMessage())
         },
     }
 }
