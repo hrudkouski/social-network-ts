@@ -1,4 +1,7 @@
 // Actions
+import {AppDispatch} from "./redux-store";
+import {usersApi} from "../api/api";
+
 const FOLLOW = 'social-network-ts/users_reducer/FOLLOW';
 const UNFOLLOW = 'social-network-ts/users_reducer/UNFOLLOW';
 const SET_USERS = 'social-network-ts/users_reducer/SET_USERS';
@@ -114,3 +117,42 @@ export const toggleFollowingProgress = (progress: boolean, userID: number) => ({
     progress,
     userID,
 } as const)
+
+// ThunkCreator
+export const getUsers = (currentPage: number) => {
+    return (dispatch: AppDispatch) => {
+
+        dispatch(toggleIsFetching(true));
+
+        usersApi.getUsers(currentPage)
+            .then(data => {
+                dispatch(toggleIsFetching(false));
+                dispatch(setUsers(data.items));
+                dispatch(setTotalUsersCount(data.totalCount));
+            })
+    }
+}
+export const unFollow = (userID: number) => {
+    return (dispatch: AppDispatch) => {
+        dispatch(toggleFollowingProgress(true, userID));
+        usersApi.unFollow(userID)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unFollowUser(userID))
+                }
+                dispatch(toggleFollowingProgress(false, userID));
+            })
+    }
+}
+export const follow = (userID: number) => {
+    return (dispatch: AppDispatch) => {
+        dispatch(toggleFollowingProgress(true, userID));
+        usersApi.follow(userID)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(followUser(userID))
+                }
+                dispatch(toggleFollowingProgress(false, userID));
+            })
+    }
+}

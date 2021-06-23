@@ -1,4 +1,7 @@
 // Actions
+import {AppDispatch} from "./redux-store";
+import {authApi} from "../api/api";
+
 const SET_AUTH_USERS_DATA = 'social-network-ts/auth_reducer/SET_AUTH_USERS_DATA';
 const TOGGLE_IS_FETCHING = 'social-network-ts/auth_reducer/TOGGLE_IS_FETCHING';
 
@@ -50,3 +53,20 @@ export const setAuthUsersData = (userId: number, login: string, email: string) =
     userId, login, email
 } as const)
 export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
+
+// Thunk Creators
+export const getAuthUserData = () => {
+    return (dispatch: AppDispatch) => {
+
+        dispatch(toggleIsFetching(true));
+
+        authApi.amIsAuth()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(toggleIsFetching(false));
+                    let {id, login, email} = response.data.data;
+                    dispatch(setAuthUsersData(id, login, email));
+                }
+            })
+    }
+}

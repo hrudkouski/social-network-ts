@@ -25,8 +25,9 @@
 }
 
 .item a.active {
-    color: gold;
+    color: #59FC02;
     font-weight: bold;
+    transform: scale(2);
 }
 
 .item a:hover {

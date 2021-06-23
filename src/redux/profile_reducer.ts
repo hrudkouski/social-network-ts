@@ -1,4 +1,7 @@
 // Actions
+import {AppDispatch} from "./redux-store";
+import {profileApi} from "../api/api";
+
 const ADD_POST = 'social-network-ts/profile_reducer/ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'social-network-ts/profile_reducer/UPDATE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE';
@@ -107,5 +110,14 @@ export const setUsersProfile = (profileUser: ProfileUserType) => {
         type: SET_USER_PROFILE,
         profileUser,
     } as const
+}
+// ThunkCreator
+export const getUserProfile = (userID: string) => {
+    return (dispatch: AppDispatch) => {
+        profileApi.getProfile(userID)
+            .then(response => {
+                dispatch(setUsersProfile(response.data));
+            })
+    }
 }
 
