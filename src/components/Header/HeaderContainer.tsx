@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getAuthUserData, setAuthUsersData, toggleIsFetching} from "../../redux/auth_reducer";
 import {AppStateType} from "../../redux/redux-store";
 
-type MapStatePropsType = {
+export type MapStatePropsType = {
     login: string
     isAuth: boolean
 };

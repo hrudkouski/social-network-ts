@@ -12,6 +12,7 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type MapStatePropsType = {
     userPage: UsersPageType
@@ -74,7 +75,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
 
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
     followUser,
     toggleFollowingProgress,
     unFollowUser,
@@ -82,5 +83,5 @@ export default connect(mapStateToProps, {
     getUsers,
     unFollow,
     follow
-})(UsersContainer);
+})(UsersContainer));
 

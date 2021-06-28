@@ -8,7 +8,7 @@ type HeaderPropsType = {
     isAuth: boolean
 }
 
-export const Header = (props: HeaderPropsType) => {
+export const Header: React.FC<HeaderPropsType> = ({login, ...props}) => {
 
     return (
         <header className={s.AppHeader}>
@@ -17,7 +17,7 @@ export const Header = (props: HeaderPropsType) => {
                 {props.isAuth
                     ? <div>
                         <span className={s.loginTitle}>Username: </span>
-                        <span className={s.userName}>{props.login}</span>
+                        <span className={s.userName}>{login}</span>
                     </div>
                     : <NavLink to={'/login'}>
                         Please login to continue
