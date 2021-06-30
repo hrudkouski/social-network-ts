@@ -9,11 +9,18 @@
     background-color: #faf8f8;
     border: #0e0e0e solid 10px;
     min-height: 97vh;
+    width: 90%;
+    margin: 0 auto;
+
 }
 
 .AppContent {
     grid-area: c;
     background-color: #0e7a6a;
+}
+
+body {
+    background-color: #2f2020;
 }
 
 

@@ -11,6 +11,7 @@ import youtubeSVG from '../../../assets/icons/youtube.png';
 import gitHubeSVG from '../../../assets/icons/github.png';
 import gmailSVG from '../../../assets/icons/gmail.png';
 import avatarPhoto from "../../../assets/images/avatar.png";
+import {ProfileStatus} from "./ProfileStatus";
 
 
 export type ProfileInfoType = {
@@ -27,6 +28,7 @@ export const ProfileInfo = (props: ProfileInfoType) => {
             <div className={s.description}>
                 <img alt={'avatar'} src={props.profileUser.photos.large ? props.profileUser.photos.large : avatarPhoto}/>
                 <div>
+                    <ProfileStatus status={'New status'}/>
                     <span className={s.titleText}>Full Name: </span>
                     {props.profileUser.fullName}
                 </div>
