@@ -1,7 +1,7 @@
-// Actions
 import {AppDispatch} from "./redux-store";
 import {usersApi} from "../api/api";
 
+// Actions
 const FOLLOW = 'social-network-ts/users_reducer/FOLLOW';
 const UNFOLLOW = 'social-network-ts/users_reducer/UNFOLLOW';
 const SET_USERS = 'social-network-ts/users_reducer/SET_USERS';

@@ -3,6 +3,7 @@ import {Header} from "./Header";
 import {connect} from "react-redux";
 import {getAuthUserData, setAuthUsersData, toggleIsFetching} from "../../redux/auth_reducer";
 import {AppStateType} from "../../redux/redux-store";
+import {compose} from 'redux';
 
 export type MapStatePropsType = {
     login: string
@@ -32,5 +33,10 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     };
 }
 
-
-export default connect(mapStateToProps, {setAuthUsersData, toggleIsFetching, getAuthUserData})(HeaderContainer);
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        setAuthUsersData,
+        toggleIsFetching,
+        getAuthUserData
+    }),
+)(HeaderContainer);
