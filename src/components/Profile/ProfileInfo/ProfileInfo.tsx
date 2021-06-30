@@ -13,9 +13,10 @@ import gmailSVG from '../../../assets/icons/gmail.png';
 import avatarPhoto from "../../../assets/images/avatar.png";
 import {ProfileStatus} from "./ProfileStatus";
 
-
 export type ProfileInfoType = {
     profileUser: ProfileUserType | null
+    profileStatus: string
+    updateStatus: (newStatus: string) => void
 }
 
 export const ProfileInfo = (props: ProfileInfoType) => {
@@ -28,7 +29,10 @@ export const ProfileInfo = (props: ProfileInfoType) => {
             <div className={s.description}>
                 <img alt={'avatar'} src={props.profileUser.photos.large ? props.profileUser.photos.large : avatarPhoto}/>
                 <div>
-                    <ProfileStatus status={'New status'}/>
+                    <ProfileStatus
+                        updateStatus={props.updateStatus}
+                        profileStatus={props.profileStatus}
+                    />
                     <span className={s.titleText}>Full Name: </span>
                     {props.profileUser.fullName}
                 </div>

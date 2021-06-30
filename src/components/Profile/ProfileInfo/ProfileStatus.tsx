@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './ProfileStatus.module.css';
 
 type ProfileStatusType = {
-    status: string
+    profileStatus: string
+    updateStatus: (newStatus: string) => void
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusType> {
-
     state = {
         editMode: false,
-        status: 'My status',
+        status: this.props.profileStatus
     }
 
     activateEditModeHandler = () => {
@@ -22,9 +22,17 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
         this.setState({
             editMode: false
         });
+        this.props.updateStatus(this.state.status);
+    }
+
+    changeProfileStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            status: e.currentTarget.value
+        });
     }
 
     render() {
+
         return <div className={s.wrapperStatus}>
             {this.state.editMode
                 ? <div>
@@ -33,11 +41,13 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
                         type="text"
                         onBlur={this.deActivateEditModeHandler}
                         autoFocus
+                        placeholder='print your status'
+                        onChange={this.changeProfileStatusHandler}
                     />
                 </div>
                 : <div>
                  <span onDoubleClick={this.activateEditModeHandler}>
-                     <b>Status: </b> {this.props.status}
+                     <b>Status: </b> {this.props.profileStatus || 'the user didn\'t write a status...'}
                  </span>
                 </div>}
         </div>
