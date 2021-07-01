@@ -31,8 +31,17 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
         });
     }
 
-    render() {
+    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>) {
+        console.log('componentDidUpdate')
+        if (prevProps.profileStatus !== this.props.profileStatus) {
+            this.setState({
+                status: this.props.profileStatus
+            });
+        }
+    }
 
+    render() {
+        console.log('render')
         return <div className={s.wrapperStatus}>
             {this.state.editMode
                 ? <div>
