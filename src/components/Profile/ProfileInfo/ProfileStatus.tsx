@@ -41,7 +41,6 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
     }
 
     render() {
-        console.log('render')
         return <div className={s.wrapperStatus}>
             {this.state.editMode
                 ? <div>
