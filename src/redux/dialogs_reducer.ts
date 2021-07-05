@@ -1,6 +1,5 @@
 // Actions
 const ADD_MESSAGE = 'social-network-ts/dialogs_reducer/ADD_MESSAGE';
-const UPDATE_TEXT_MESSAGE = 'social-network-ts/dialogs_reducer/UPDATE_TEXT_MESSAGE';
 
 //Types
 export type MessageType = {
@@ -16,9 +15,8 @@ export type DialogPageType = {
     messages: Array<MessageType>
     newMessageText: string
 }
-export type addMessageAT = ReturnType<typeof addMessage>
-export type updateNewTextMessageAT = ReturnType<typeof updateNewTextMessage>
-export type ActionsTypesDR = addMessageAT | updateNewTextMessageAT;
+
+export type ActionsTypesDR = ReturnType<typeof addMessage>
 
 //Initial State
 let initialState: DialogPageType = {
@@ -47,28 +45,16 @@ export const dialogsReducer = (state: DialogPageType = initialState, action: Act
         case ADD_MESSAGE:
             const newMessagePost: MessageType = {
                 id: new Date().getTime(),
-                message: state.newMessageText
+                message: action.newMessageBody
             }
             return {
                 ...state,
                 messages: [...state.messages, newMessagePost],
-                newMessageText: ''
             };
-        case UPDATE_TEXT_MESSAGE:
-            return {
-                ...state,
-                newMessageText: action.newMessageText
-            }
         default:
             return state;
     }
 }
 
 // Action Creators
-export const addMessage = () => ({type: ADD_MESSAGE}) as const
-export const updateNewTextMessage = (newMessageText: string) => {
-    return {
-        type: UPDATE_TEXT_MESSAGE,
-        newMessageText: newMessageText
-    } as const
-}
+export const addMessage = (newMessageBody: string) => ({type: ADD_MESSAGE, newMessageBody}) as const

@@ -3,7 +3,6 @@ import {profileApi} from "../api/api";
 
 // Actions
 const ADD_POST = 'social-network-ts/profile_reducer/ADD_POST';
-const UPDATE_NEW_POST_TEXT = 'social-network-ts/profile_reducer/UPDATE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE';
 const SET_PROFILE_STATUS = 'social-network-ts/profile_reducer/SET_PROFILE_STATUS';
 const UPDATE_PROFILE_STATUS = 'social-network-ts/profile_reducer/UPDATE_PROFILE_STATUS';
@@ -42,12 +41,10 @@ export type ProfilePageType = {
     profileStatus: string
 }
 export type addPostAT = ReturnType<typeof addPost>
-export type updateNewPostTextAT = ReturnType<typeof updateNewPostText>
 export type setUsersProfileAT = ReturnType<typeof setUsersProfile>
 export type setProfileStatusAT = ReturnType<typeof setProfileStatus>
 export type updateProfileStatusAT = ReturnType<typeof updateProfileStatus>
 export type ActionsTypesPR = addPostAT
-    | updateNewPostTextAT
     | setUsersProfileAT
     | updateProfileStatusAT
     | setProfileStatusAT;
@@ -82,18 +79,12 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         case ADD_POST:
             const newPost: PostType = {
                 id: new Date().getTime(),
-                message: state.newPostText,
+                message: action.newPostMessage,
                 likesCount: 19
             }
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ''
-            };
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newPostText
             };
         case SET_USER_PROFILE:
             return {
@@ -116,14 +107,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 }
 
 // Action Creators
-export const addPost = () => {
-    return {type: ADD_POST} as const
-}
-export const updateNewPostText = (newPostText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newPostText: newPostText,
-    } as const
+export const addPost = (newPostMessage: string) => {
+    return {type: ADD_POST, newPostMessage} as const
 }
 export const setUsersProfile = (profileUser: ProfileUserType) => {
     return {
@@ -153,6 +138,7 @@ export const getUserProfile = (userID: string) => {
             })
     }
 }
+
 export const getStatus = (userID: string) => {
     return (dispatch: AppDispatch) => {
         profileApi.getStatus(userID)
@@ -161,6 +147,7 @@ export const getStatus = (userID: string) => {
             })
     }
 }
+
 export const updateStatus = (newStatus: string) => {
     return (dispatch: AppDispatch) => {
         profileApi.updateStatus(newStatus)
