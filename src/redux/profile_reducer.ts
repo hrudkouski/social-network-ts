@@ -130,7 +130,7 @@ export const updateProfileStatus = (newStatus: string) => {
 }
 
 // ThunkCreator
-export const getUserProfile = (userID: string) => {
+export const getUserProfile = (userID: number) => {
     return (dispatch: AppDispatch) => {
         profileApi.getProfile(userID)
             .then(response => {
@@ -139,7 +139,7 @@ export const getUserProfile = (userID: string) => {
     }
 }
 
-export const getStatus = (userID: string) => {
+export const getStatus = (userID: number) => {
     return (dispatch: AppDispatch) => {
         profileApi.getStatus(userID)
             .then(response => {

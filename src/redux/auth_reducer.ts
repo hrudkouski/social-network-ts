@@ -1,5 +1,6 @@
 import {AppThunk} from "./redux-store";
 import {authApi} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 // Actions
 const SET_AUTH_USERS_DATA = 'social-network-ts/auth_reducer/SET_AUTH_USERS_DATA';
@@ -66,6 +67,10 @@ export const login = (email: string, password: string, rememberMe: boolean): App
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthUserData())
+                } else {
+                    let message = response.data.messages.length > 0 ? response.data.messages : 'Some error';
+                    let action = stopSubmit('login', {_error: message});
+                    dispatch(action)
                 }
             })
     }

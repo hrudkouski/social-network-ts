@@ -11,3 +11,10 @@
     color: red;
     font-weight: bold;
 }
+
+.formSummaryError {
+    border: #59FC02 3px solid;
+    padding: 5px;
+    color: #59FC02;
+    display: inline-block;
+}

@@ -6,15 +6,15 @@ import {connect} from "react-redux";
 import {login, logout} from "../../redux/auth_reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import s from '../../common/FormsControls/FormsControls.module.css'
 
 type LoginType = {
     login: (email: string, password: string, rememberMe: boolean) => void
     logout: () => void
     isAuth: boolean
-    userId: number | null
 }
 
-type FormDataType = {
+export type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
@@ -23,28 +23,25 @@ type FormDataType = {
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field
-                    validate={[required]}
-                    component={Input}
-                    name='email'
-                    placeholder='email'/>
-            </div>
-            <div>
-                <Field
-                    validate={[required]}
-                    component={Input}
-                    name='password'
-                    placeholder='password'
-                    type={'password'}/>
-            </div>
-            <div>
-                <Field
-                    component={Input}
-                    name='rememberMe'
-                    type='checkbox'/>
-                remember me
-            </div>
+            {props.error && <span className={s.formSummaryError}>
+                {props.error}
+            </span>}
+            <Field
+                validate={[required]}
+                component={Input}
+                name='email'
+                placeholder='email'/>
+            <Field
+                validate={[required]}
+                component={Input}
+                name='password'
+                placeholder='password'
+                type={'password'}/>
+            <Field
+                component={Input}
+                name='rememberMe'
+                type='checkbox'/>
+            remember me
             <div>
                 <button>Login</button>
             </div>

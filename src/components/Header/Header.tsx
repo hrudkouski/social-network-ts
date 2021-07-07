@@ -19,9 +19,7 @@ export const Header: React.FC<HeaderPropsType> = ({login, ...props}) => {
                     ? <div>
                         <span className={s.loginTitle}>Username: </span>
                         <span className={s.userName}>{login}</span>
-                        <div>
-                            <button onClick={props.logout}>LogOut</button>
-                        </div>
+                        <button style={{marginLeft: '15px'}} onClick={props.logout}>LogOut</button>
                     </div>
                     : <NavLink to={'/login'}>
                         Please login to continue

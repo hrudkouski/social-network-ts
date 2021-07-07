@@ -5,7 +5,7 @@ import {AuthActionTypes, authReducer} from "./auth_reducer";
 import {ActionsTypesDR, dialogsReducer} from "./dialogs_reducer";
 import {sideBarReducer} from "./sideBar_reducer";
 import thunkMiddleWare, {ThunkAction} from 'redux-thunk';
-import {reducer as formReducer} from 'redux-form';
+import {FormAction, reducer as formReducer} from 'redux-form';
 
 export type AppStateType = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch;
@@ -14,6 +14,7 @@ export type AppActionType =
     | ActionsTypesDR
     | UsersActionTypes
     | AuthActionTypes
+    | FormAction
 // export type StoreType = typeof store;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionType>
