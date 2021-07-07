@@ -4,8 +4,9 @@ import logo from "../../logo.svg";
 import s from './Header.module.css'
 
 type HeaderPropsType = {
-    login: string
+    login: string | null
     isAuth: boolean
+    logout: () => void
 }
 
 export const Header: React.FC<HeaderPropsType> = ({login, ...props}) => {
@@ -18,6 +19,9 @@ export const Header: React.FC<HeaderPropsType> = ({login, ...props}) => {
                     ? <div>
                         <span className={s.loginTitle}>Username: </span>
                         <span className={s.userName}>{login}</span>
+                        <div>
+                            <button onClick={props.logout}>LogOut</button>
+                        </div>
                     </div>
                     : <NavLink to={'/login'}>
                         Please login to continue
