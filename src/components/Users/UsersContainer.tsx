@@ -1,13 +1,9 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
-    follow,
-    followUser, getUsers,
-    setCurrentPage,
-    toggleFollowingProgress,
-    unFollow,
-    unFollowUser,
-    UsersPageType
+    follow, followUser, getResponseUsers,
+    setCurrentPage, toggleFollowingProgress,
+    unFollow, unFollowUser, UserType
 } from "../../redux/users_reducer";
 import React from "react";
 import {Users} from "./Users";
@@ -15,16 +11,12 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {
-    getCurrentPage,
-    getFollowingInProgress,
-    getIsFetching,
-    getPageSize,
-    getTotalUserCount,
-    getUsersPage
+    getCurrentPage, getFollowingInProgress, getIsFetching,
+    getPageSize, getTotalUserCount, getUsers
 } from "../../redux/users_selectors";
 
 type MapStatePropsType = {
-    userPage: UsersPageType
+    users: Array<UserType>
     pageSize: number
     totalUserCount: number
     currentPage: number
@@ -36,7 +28,7 @@ type MapDispatchToPropsType = {
     unFollowUser: (userID: number) => void
     setCurrentPage: (page: number) => void
     toggleFollowingProgress: (progress: boolean, userID: number) => void
-    getUsers: (currentPage: number) => void
+    getResponseUsers: (currentPage: number) => void
     unFollow: (userID: number) => void
     follow: (userID: number) => void
 }
@@ -44,7 +36,7 @@ export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        userPage: getUsersPage(state),
+        users: getUsers(state),
         pageSize: getPageSize(state),
         totalUserCount: getTotalUserCount(state),
         currentPage: getCurrentPage(state),
@@ -55,12 +47,12 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage);
+        this.props.getResponseUsers(this.props.currentPage);
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.getUsers(pageNumber);
+        this.props.getResponseUsers(pageNumber);
     }
 
     render() {
@@ -71,7 +63,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 totalUserCount={this.props.totalUserCount}
                 onPageChanged={this.onPageChanged}
                 currentPage={this.props.currentPage}
-                userPage={this.props.userPage}
+                users={this.props.users}
                 followUser={this.props.followUser}
                 unFollowUser={this.props.unFollowUser}
                 followingInProgress={this.props.followingInProgress}
@@ -89,7 +81,7 @@ export default compose<React.ComponentType>(
         toggleFollowingProgress,
         unFollowUser,
         setCurrentPage,
-        getUsers,
+        getResponseUsers,
         unFollow,
         follow
     }),

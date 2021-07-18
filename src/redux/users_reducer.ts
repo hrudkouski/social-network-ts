@@ -119,7 +119,7 @@ export const toggleFollowingProgress = (progress: boolean, userID: number) => ({
 } as const)
 
 // ThunkCreator
-export const getUsers = (currentPage: number): AppThunk => {
+export const getResponseUsers = (currentPage: number): AppThunk => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         dispatch(setCurrentPage(currentPage));
