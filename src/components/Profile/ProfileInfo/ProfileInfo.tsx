@@ -11,7 +11,7 @@ import youtubeSVG from '../../../assets/icons/youtube.png';
 import gitHubeSVG from '../../../assets/icons/github.png';
 import gmailSVG from '../../../assets/icons/gmail.png';
 import avatarPhoto from "../../../assets/images/avatar.png";
-import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 export type ProfileInfoType = {
     profileUser: ProfileUserType | null
@@ -27,12 +27,17 @@ export const ProfileInfo = (props: ProfileInfoType) => {
     return (
         <div className={s.profileInfo}>
             <div className={s.description}>
-                <img alt={'avatar'} src={props.profileUser.photos.large ? props.profileUser.photos.large : avatarPhoto}/>
+                <img alt={'avatar'}
+                     src={props.profileUser.photos.large ? props.profileUser.photos.large : avatarPhoto}/>
                 <div>
-                    <ProfileStatus
+                    <ProfileStatusWithHooks
                         updateStatus={props.updateStatus}
                         profileStatus={props.profileStatus}
                     />
+                    {/*<ProfileStatus*/}
+                    {/*    updateStatus={props.updateStatus}*/}
+                    {/*    profileStatus={props.profileStatus}*/}
+                    {/*/>*/}
                     <span className={s.titleText}>Full Name: </span>
                     {props.profileUser.fullName}
                 </div>
