@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from './ProfileStatus.module.css';
 
 type ProfileStatusType = {
@@ -10,6 +10,10 @@ export const ProfileStatusWithHooks = ({profileStatus, updateStatus}: ProfileSta
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [status, setStatus] = useState<string>(profileStatus);
+
+    useEffect(() => {
+        setStatus(profileStatus)
+    }, [profileStatus])
 
     const activateEditModeHandler = () => {
         setEditMode(true);
@@ -38,13 +42,12 @@ export const ProfileStatusWithHooks = ({profileStatus, updateStatus}: ProfileSta
             </div>
             : <div>
                  <span onDoubleClick={activateEditModeHandler}>
-                     <b>Status: </b> {profileStatus || 'the user didn\'t write a status...'}
+                     <b>Status: </b> {status || 'the user didn\'t write a status...'}
                  </span>
             </div>
         }
     </div>
 }
-
 
 
 
