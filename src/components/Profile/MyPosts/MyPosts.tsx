@@ -10,7 +10,9 @@ type AddMessageFormDataType = {
     newPostText: string
 }
 
-export const MyPosts: React.FC<MyPostPropsType> = (props) => {
+export const MyPosts: React.FC<MyPostPropsType> = React.memo((props) => {
+
+    console.log('My posts')
 
     let postsElements = props.profilePage.posts.map(el => {
             return (
@@ -37,7 +39,7 @@ export const MyPosts: React.FC<MyPostPropsType> = (props) => {
             </div>
         </div>
     )
-}
+})
 
 const maxLength10 = maxLengthCreator('10');
 
