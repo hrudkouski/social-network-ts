@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {HashRouter, Route} from 'react-router-dom';
 import s from '../src/App.module.css';
 import {Navbar} from "./components/Navbar/Navbar";
 import {News} from './components/News/News';
@@ -44,7 +44,7 @@ class App extends React.Component<AppContainerPropsType> {
         }
 
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className={s.AppWrapper}>
                     <HeaderContainer/>
                     <Navbar/>
@@ -68,7 +68,7 @@ class App extends React.Component<AppContainerPropsType> {
                         <Route component={Login} path="/login"/>
                     </div>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }

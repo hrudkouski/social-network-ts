@@ -7,11 +7,13 @@ import {login, logout} from "../../redux/auth_reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
 import s from '../../common/FormsControls/FormsControls.module.css'
+import {Preloader} from "../../common/Preloader/Preloader";
 
 type LoginType = {
     login: (email: string, password: string, rememberMe: boolean) => void
     logout: () => void
     isAuth: boolean
+    isFetching: boolean
 }
 
 export type FormDataType = {
@@ -20,11 +22,11 @@ export type FormDataType = {
     rememberMe: boolean
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            {props.error && <span className={s.formSummaryError}>
-                {props.error}
+        <form onSubmit={handleSubmit}>
+            {error && <span className={s.formSummaryError}>
+                {error}
             </span>}
             <Field
                 validate={[required]}
@@ -51,14 +53,18 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm);
 
-const Login = (props: LoginType) => {
+const Login = ({login, isAuth, isFetching}: LoginType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        login(formData.email, formData.password, formData.rememberMe)
     }
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to={`/profile/5513`}/>
+    }
+
+    if (isFetching) {
+        return <Preloader/>
     }
 
     return <>
@@ -69,11 +75,13 @@ const Login = (props: LoginType) => {
 
 type MapStatePropsType = {
     isAuth: boolean
+    isFetching: boolean
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        isFetching: state.auth.isFetching,
     }
 }
 

@@ -8,6 +8,7 @@ import {compose} from 'redux';
 export type MapStatePropsType = {
     login: string | null
     isAuth: boolean
+    isFetching: boolean
 };
 type MapDispatchToPropsType = {
     setAuthUsersData: (userId: number, login: string, email: string) => void
@@ -27,6 +28,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
+        isFetching: state.auth.isFetching,
     };
 }
 

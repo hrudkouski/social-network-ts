@@ -131,29 +131,25 @@ export const updateProfileStatus = (newStatus: string) => {
 
 // ThunkCreator
 export const getUserProfile = (userID: number) => {
-    return (dispatch: AppDispatch) => {
-        profileApi.getProfile(userID)
-            .then(response => {
-                dispatch(setUsersProfile(response.data));
-            })
+    return async (dispatch: AppDispatch) => {
+        let response = await profileApi.getProfile(userID)
+        dispatch(setUsersProfile(response.data));
     }
 }
 
 export const getStatus = (userID: number) => {
-    return (dispatch: AppDispatch) => {
-        profileApi.getStatus(userID)
-            .then(response => {
-                dispatch(setProfileStatus(response.data));
-            })
+    return async (dispatch: AppDispatch) => {
+        let response = await profileApi.getStatus(userID)
+        dispatch(setProfileStatus(response.data));
     }
 }
 
 export const updateStatus = (newStatus: string) => {
-    return (dispatch: AppDispatch) => {
-        profileApi.updateStatus(newStatus)
-            .then(response => {
-                dispatch(setProfileStatus(response.data.status));
-            })
+    return async (dispatch: AppDispatch) => {
+        let response = await profileApi.updateStatus(newStatus)
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileStatus(response.data.status));
+        }
     }
 }
 

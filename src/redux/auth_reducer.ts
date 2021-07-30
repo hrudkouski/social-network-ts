@@ -48,43 +48,40 @@ export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCH
 
 // Thunk Creators
 export const getAuthUserData = (): AppThunk => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true));
-        authApi.amIsAuth()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(toggleIsFetching(false));
-                    let {id, login, email} = response.data.data;
-                    dispatch(setAuthUsersData(id, login, email, true));
-                }
-            })
+        let response = await authApi.amIsAuth()
+        if (response.data.resultCode === 0) {
+            dispatch(toggleIsFetching(false));
+            let {id, login, email} = response.data.data;
+            dispatch(setAuthUsersData(id, login, email, true));
+        }
     }
 }
 
 export const login = (email: string, password: string, rememberMe: boolean): AppThunk => {
-    return (dispatch) => {
-        authApi.login(email, password, rememberMe)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(getAuthUserData())
-                } else {
-                    let message = response.data.messages.length > 0 ? response.data.messages : 'Some error';
-                    let action = stopSubmit('login', {_error: message});
-                    dispatch(action)
-                }
-            })
+    return async (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        let response = await authApi.login(email, password, rememberMe)
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthUserData())
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages : 'Some error';
+            let action = stopSubmit('login', {_error: message});
+            dispatch(action)
+        }
+        dispatch(toggleIsFetching(false));
     }
 }
 
 export const logout = (): AppThunk => {
-    return (dispatch) => {
+    debugger
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true));
-        authApi.logout()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(toggleIsFetching(false));
-                    dispatch(setAuthUsersData(null, null, null, false))
-                }
-            })
+        let response = await authApi.logout()
+        if (response.data.resultCode === 0) {
+            dispatch(toggleIsFetching(false));
+            dispatch(setAuthUsersData(null, null, null, false))
+        }
     }
 }

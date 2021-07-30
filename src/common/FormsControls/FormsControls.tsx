@@ -1,16 +1,16 @@
 import React from "react";
 import s from './FormsControls.module.css'
 
-export const FormControl: React.FC<any> = ({input, meta, ...props}) => {
+export const FormControl: React.FC<any> = ({meta: {error, touched}, children}) => {
 
-    const hasError = meta.error && meta.touched;
+    const hasError = error && touched;
 
     return (
         <div className={`${s.formControl} ${hasError ? s.error : ''}`}>
             <div>
-                {props.children}
+                {children}
             </div>
-            {hasError && <span>{meta.error}</span>}
+            {hasError && <span>{error}</span>}
         </div>
     )
 }

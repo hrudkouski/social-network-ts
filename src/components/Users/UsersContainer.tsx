@@ -6,7 +6,6 @@ import {
     unFollow, unFollowUser, UserType
 } from "../../redux/users_reducer";
 import React from "react";
-import {Users} from "./Users";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -14,6 +13,7 @@ import {
     getCurrentPage, getFollowingInProgress, getIsFetching,
     getPageSize, getTotalUserCount, getUsers
 } from "../../redux/users_selectors";
+import { Users } from "./Users";
 
 type MapStatePropsType = {
     users: Array<UserType>
