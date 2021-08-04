@@ -38,7 +38,8 @@ export const Users: React.FC<UsersPresentType> = (
                 onPageChanged={onPageChanged}/>
 
             {
-                users.map((el) => <User
+                users.map((el, i) => <User
+                    key={i}
                     followingInProgress={followingInProgress}
                     unFollow={unFollow}
                     follow={follow}
