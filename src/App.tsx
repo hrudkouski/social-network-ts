@@ -12,9 +12,9 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from "./components/Login/Login";
 import {compose} from "redux";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app_reducer";
-import {AppStateType} from "./redux/redux-store";
+import store, {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./common/Preloader/Preloader";
 
 type MapDispatchToPropsType = {
@@ -73,8 +73,16 @@ class App extends React.Component<AppContainerPropsType> {
     }
 }
 
-export default compose<React.ComponentType>(
+const AppContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {
         initializeApp,
     }),
 )(App);
+
+export const MainApp = () => {
+    return <React.StrictMode>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </React.StrictMode>
+}
