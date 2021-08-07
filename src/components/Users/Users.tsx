@@ -32,7 +32,8 @@ export const Users: React.FC<UsersPresentType> = (
     return (
         <div className={s.wrapper}>
             <Paginator
-                totalUserCount={totalUserCount}
+                portionSize={15}
+                totalItemCount={totalUserCount}
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChanged={onPageChanged}/>

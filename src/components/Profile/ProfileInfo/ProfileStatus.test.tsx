@@ -51,7 +51,7 @@ describe("ProfileStatus component", () => {
     test("Input should be displayed in editMode instead of span", () => {
         const component = create(
             <ProfileStatus
-                updateStatus={() => console.log(1)}
+                updateStatus={() => {}}
                 profileStatus='New status'/>
         );
         const root = component.root;

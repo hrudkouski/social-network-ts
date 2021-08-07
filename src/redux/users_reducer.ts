@@ -51,7 +51,7 @@ export type UsersActionTypes =
 //Initial State
 const initialState: UsersPageType = {
     users: [] as Array<UserType>,
-    pageSize: 30,
+    pageSize: 5,
     totalUserCount: 100,
     currentPage: 1,
     isFetching: false,
