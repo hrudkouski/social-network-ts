@@ -1,6 +1,6 @@
 .AppNav {
     grid-area: n;
-    background-color: brown;
+    background-color: #0E1621;
 }
 
 .item {
@@ -22,6 +22,7 @@
 .item a {
     text-decoration: none;
     color: #f3dcf5;
+    font-size: 1.2em;
 }
 
 .item a.active {

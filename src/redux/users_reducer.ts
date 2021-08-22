@@ -4,6 +4,16 @@ import {Dispatch} from "redux";
 import {updateObjectInArray} from "../utils/objects-helpers/objects-helpers";
 
 // Actions
+// enum Users {
+//     FOLLOW = 'social-network-ts/users_reducer/FOLLOW',
+//     UNFOLLOW = 'social-network-ts/users_reducer/UNFOLLOW',
+//     SET_USERS = 'social-network-ts/users_reducer/SET_USERS',
+//     SET_CURRENT_PAGE = 'social-network-ts/users_reducer/SET_CURRENT_PAGE',
+//     SET_TOTAL_USERS_COUNT = 'social-network-ts/users_reducer/SET_TOTAL_USERS_COUNT',
+//     TOGGLE_IS_FETCHING = 'social-network-ts/users_reducer/TOGGLE_IS_FETCHING',
+//     TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network-ts/users_reducer/TOGGLE_IS_FOLLOWING_PROGRESS',
+// }
+
 const FOLLOW = 'social-network-ts/users_reducer/FOLLOW';
 const UNFOLLOW = 'social-network-ts/users_reducer/UNFOLLOW';
 const SET_USERS = 'social-network-ts/users_reducer/SET_USERS';
