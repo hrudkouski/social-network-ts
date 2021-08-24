@@ -6,12 +6,17 @@ const ADD_POST = 'social-network-ts/profile_reducer/ADD_POST';
 const SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE';
 const SET_PROFILE_STATUS = 'social-network-ts/profile_reducer/SET_PROFILE_STATUS';
 const UPDATE_PROFILE_STATUS = 'social-network-ts/profile_reducer/UPDATE_PROFILE_STATUS';
+const SAVE_PHOTO_SUCCESS = 'social-network-ts/profile_reducer/SAVE_PHOTO_SUCCESS';
 
 //Types
 export type PostType = {
     id: number,
     message: string,
     likesCount: number
+}
+type PhotoType = {
+    small: string
+    large: string
 }
 export type ProfileUserType = {
     aboutMe: string
@@ -29,10 +34,7 @@ export type ProfileUserType = {
     lookingForAJobDescription: string
     fullName: string
     userId: number
-    photos: {
-        small: string
-        large: string
-    }
+    photos: PhotoType
 }
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -44,9 +46,11 @@ export type addPostAT = ReturnType<typeof addPost>
 export type setUsersProfileAT = ReturnType<typeof setUsersProfile>
 export type setProfileStatusAT = ReturnType<typeof setProfileStatus>
 export type updateProfileStatusAT = ReturnType<typeof updateProfileStatus>
+export type savePhotoSuccessAT = ReturnType<typeof savePhotoSuccess>
 export type ActionsTypesPR = addPostAT
     | setUsersProfileAT
     | updateProfileStatusAT
+    | savePhotoSuccessAT
     | setProfileStatusAT;
 
 //Initial State
@@ -101,6 +105,14 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 ...state,
                 profileStatus: action.newStatus,
             }
+        case SAVE_PHOTO_SUCCESS:
+            return {
+                ...state,
+                profileUser: {
+                    ...state.profileUser,
+                    photos: action.photo
+                } as ProfileUserType
+            }
         default:
             return state;
     }
@@ -128,6 +140,12 @@ export const updateProfileStatus = (newStatus: string) => {
         newStatus,
     } as const
 }
+export const savePhotoSuccess = (photo: PhotoType) => {
+    return {
+        type: SAVE_PHOTO_SUCCESS,
+        photo,
+    } as const
+}
 
 // ThunkCreator
 export const getUserProfile = (userID: number) => {
@@ -136,19 +154,29 @@ export const getUserProfile = (userID: number) => {
         dispatch(setUsersProfile(response.data));
     }
 }
-
 export const getStatus = (userID: number) => {
     return async (dispatch: AppDispatch) => {
         let response = await profileApi.getStatus(userID)
         dispatch(setProfileStatus(response.data));
     }
 }
-
 export const updateStatus = (newStatus: string) => {
     return async (dispatch: AppDispatch) => {
         let response = await profileApi.updateStatus(newStatus)
         if (response.data.resultCode === 0) {
             dispatch(setProfileStatus(response.data.status));
+        }
+    }
+}
+export const savePhoto = (file: File) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            let response = await profileApi.savePhoto(file)
+            if (response.data.resultCode === 0) {
+                dispatch(savePhotoSuccess(response.data.data.photos));
+            }
+        } catch (e) {
+            throw new Error(e)
         }
     }
 }

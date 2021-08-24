@@ -4,9 +4,10 @@ import s from './ProfileStatus.module.css';
 type ProfileStatusType = {
     profileStatus: string
     updateStatus: (newStatus: string) => void
+    isOwner: boolean
 }
 
-export const ProfileStatusWithHooks = ({profileStatus, updateStatus}: ProfileStatusType) => {
+export const ProfileStatusWithHooks = ({profileStatus, updateStatus, isOwner}: ProfileStatusType) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [status, setStatus] = useState<string>(profileStatus);
@@ -16,7 +17,7 @@ export const ProfileStatusWithHooks = ({profileStatus, updateStatus}: ProfileSta
     }, [profileStatus])
 
     const activateEditModeHandler = () => {
-        setEditMode(true);
+        if (isOwner) setEditMode(true);
     }
 
     const deActivateEditModeHandler = () => {

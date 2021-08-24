@@ -8,12 +8,16 @@ export type ProfileType = {
     profileUser: ProfileUserType | null
     profileStatus: string
     updateStatus: (newStatus: string) => void
+    isOwner: boolean
+    savePhoto: (photo: File) => void
 }
 
 export const Profile = (props: ProfileType) => {
     return (
         <div className={s.AppContent}>
             <ProfileInfo
+                savePhoto={props.savePhoto}
+                isOwner={props.isOwner}
                 updateStatus={props.updateStatus}
                 profileStatus={props.profileStatus}
                 profileUser={props.profileUser}/>
