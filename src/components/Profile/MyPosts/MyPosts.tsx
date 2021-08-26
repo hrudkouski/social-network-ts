@@ -12,8 +12,6 @@ type AddMessageFormDataType = {
 
 export const MyPosts: React.FC<MyPostPropsType> = React.memo((props) => {
 
-    console.log('My posts')
-
     let postsElements = props.profilePage.posts.map(el => {
             return (
                 <Post

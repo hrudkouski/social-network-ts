@@ -1,3 +1,5 @@
+export type ValidatorType = (value: string | undefined) => string | undefined
+
 export const required = (value: string) => value ? undefined : "Field is required";
 
 export const maxLengthCreator = (maxLength: string) => (value: string) => {
