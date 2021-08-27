@@ -11,19 +11,19 @@ export const ProfileData = (props: ProfileDataPropsType) => {
   return <div>
     <div>
       <span className={s.titleText}>Full Name: </span>
-      {props.profileUser?.fullName}
+      {props.profileUser.fullName}
     </div>
     <div>
       <span className={s.titleText}>About Me: </span>
-      {props.profileUser?.aboutMe || '...'}
+      {props.profileUser.aboutMe || '...'}
     </div>
     <div>
       <span className={s.titleText}>Looking For A Job: </span>
-      {props.profileUser?.lookingForAJob ? 'yes' : 'no'}
+      {props.profileUser.lookingForAJob ? 'yes' : 'no'}
     </div>
     <div>
       <span className={s.titleText}>My professional skills: </span>
-      {props.profileUser?.lookingForAJobDescription || '...'}
+      {props.profileUser.lookingForAJobDescription || '...'}
     </div>
 
     <div>
@@ -31,8 +31,7 @@ export const ProfileData = (props: ProfileDataPropsType) => {
       {Object.keys(props.profileUser.contacts).map((key) =>
           <Contacts contactTitle={key}
                     key={key}
-                    contactValue={props.profileUser?.contacts[key as keyof ContactsType]}/>)}
+                    contactValue={props.profileUser.contacts[key as keyof ContactsType]}/>)}
     </div>
-
   </div>
 }

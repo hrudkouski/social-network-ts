@@ -190,13 +190,16 @@ export const saveProfile = (formData: ProfileFormDataType) => {
     dispatch(toggleIsFetching(true));
     const response = await profileApi.saveProfile(formData)
     if (response.data.resultCode === 0) {
-      // @ts-ignore
-      dispatch(getUserProfile(userID));
-    } else {
-      // @ts-ignore
-      dispatch(stopSubmit('edit_profile', {
-        _error: response.data.messages[0]
-      }))
+      if (userID) {
+        // @ts-ignore
+        dispatch(getUserProfile(userID));
+      } else {
+        // @ts-ignore
+        dispatch(stopSubmit('edit_profile', {
+          _error: response.data.messages[0]
+        }))
+        return Promise.reject(response.data.messages[0])
+      }
     }
     dispatch(toggleIsFetching(false));
   }

@@ -5,7 +5,11 @@ type ContactPropsType = {
   contactValue: string | undefined
 }
 
-export const Contacts: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
+export const Contacts: React.FC<ContactPropsType> = (
+    {
+      contactTitle,
+      contactValue
+    }) => {
   return (
       <div style={{marginLeft: '20px'}}>
         <span><i>{contactTitle}</i>:

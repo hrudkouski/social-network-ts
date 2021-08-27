@@ -12,11 +12,12 @@ import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app_reducer";
 import store, {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./common/Preloader/Preloader";
+import {LoginPage} from "./components/Login/Login";
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
-const Login = React.lazy(() => import('./components/Login/Login'));
+// const Login = React.lazy(() => import('./components/Login/Login'));
 
 type MapDispatchToPropsType = { initializeApp: () => void };
 export type MapStatePropsType = { initialized: boolean };
@@ -52,7 +53,7 @@ class App extends React.Component<AppContainerPropsType> {
                             <Route component={Music} path="/music"/>
                             <Route component={Settings} path="/settings"/>
                             <Route component={FindFriends} path="/findFriends"/>
-                            <Route component={Login} path="/login"/>
+                            <Route component={LoginPage} path="/login"/>
                         </div>
                     </div>
                 </HashRouter>

@@ -1,88 +1,100 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../../common/FormsControls/FormsControls";
+import {createField, Input} from "../../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
-import {connect} from "react-redux";
-import {login, logout} from "../../redux/auth_reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../../redux/auth_reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
 import s from '../../common/FormsControls/FormsControls.module.css'
+import l from '../../components/Login/Login.module.css'
 import {Preloader} from "../../common/Preloader/Preloader";
 
-type LoginType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
-    logout: () => void
-    isAuth: boolean
-    isFetching: boolean
+type LoginPropsType = {
+  captchaURL: string | null
 }
 
-export type FormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
+export type LoginFormDataType = {
+  email: string
+  password: string
+  rememberMe: boolean
+  captcha: string | null
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
-    return (
-        <form onSubmit={handleSubmit}>
-            {error && <span className={s.formSummaryError}>
+const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, LoginPropsType> & LoginPropsType>
+    = (({
+          handleSubmit,
+          error,
+          captchaURL,
+        }) => {
+  return (
+      <form onSubmit={handleSubmit}>
+
+        <Field
+            validate={[required]}
+            component={Input}
+            name='email'
+            placeholder='email'/>
+        <Field
+            validate={[required]}
+            component={Input}
+            name='password'
+            placeholder='password'
+            type={'password'}/>
+        <Field
+            component={Input}
+            name='rememberMe'
+            type='checkbox'/> <span>remember me</span>
+
+        <div>
+          {captchaURL && <img src={captchaURL} alt={captchaURL}/>}
+        </div>
+
+        {captchaURL && createField('captcha', 'Symbols from image', Input, [])}
+
+        <div>
+          <button>Login</button>
+        </div>
+
+        {error && <span className={s.formSummaryError}>
                 {error}
             </span>}
-            <Field
-                validate={[required]}
-                component={Input}
-                name='email'
-                placeholder='email'/>
-            <Field
-                validate={[required]}
-                component={Input}
-                name='password'
-                placeholder='password'
-                type={'password'}/>
-            <Field
-                component={Input}
-                name='rememberMe'
-                type='checkbox'/>
-            remember me
-            <div>
-                <button>Login</button>
-            </div>
-        </form>
-    )
-}
+      </form>
+  )
+})
 
-const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm);
+const LoginReduxForm = reduxForm<LoginFormDataType, LoginPropsType>({form: 'loginForm'})(LoginForm)
 
-const Login = ({login, isAuth, isFetching}: LoginType) => {
+export const LoginPage: React.FC = () => {
 
-    const onSubmit = (formData: FormDataType) => {
-        login(formData.email, formData.password, formData.rememberMe)
-    }
+  const captchaURL = useSelector((state: AppStateType) => state.auth.captchaURL)
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+  const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
+  const dispatch = useDispatch()
 
-    if (isAuth) {
-        return <Redirect to={`/profile/5513`}/>
-    }
+  const onSubmit = (formData: LoginFormDataType) => {
+    dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
+  }
 
-    if (isFetching) {
-        return <Preloader/>
-    }
+  if (isAuth) return <Redirect to={`/profile/5513`}/>
+  if (isFetching) return <Preloader/>
 
-    return <>
+  return (
+      <div className={l.wrapper}>
+        <div>
+          <span>You can register -
+            <a href={'https://social-network.samuraijs.com/'}
+               rel={'noreferrer'}
+               target={'_blank'}>here
+            </a>
+          </span>
+          <div>or use test account:</div>
+          <div>Email: free@samuraijs.com</div>
+          <div>Password: free</div>
+        </div>
+
         <h1>Please, login</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
-    </>
+        <LoginReduxForm onSubmit={onSubmit} captchaURL={captchaURL}/>
+      </div>
+  )
 }
-
-type MapStatePropsType = {
-    isAuth: boolean
-    isFetching: boolean
-}
-
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-    return {
-        isAuth: state.auth.isAuth,
-        isFetching: state.auth.isFetching,
-    }
-}
-
-export default connect(mapStateToProps, {login, logout})(Login);
