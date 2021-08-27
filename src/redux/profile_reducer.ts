@@ -166,9 +166,13 @@ export const getStatus = (userID: number) => {
 }
 export const updateStatus = (newStatus: string) => {
   return async (dispatch: AppDispatch) => {
-    let response = await profileApi.updateStatus(newStatus)
-    if (response.data.resultCode === 0) {
-      dispatch(setProfileStatus(response.data.status));
+    try {
+      let response = await profileApi.updateStatus(newStatus)
+      if (response.data.resultCode === 0) {
+        dispatch(setProfileStatus(response.data.status));
+      }
+    } catch (e) {
+      alert(e)
     }
   }
 }

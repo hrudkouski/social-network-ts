@@ -15,7 +15,7 @@
 
 .profileInfo {
     display: flex;
-    background-color: rgba(237, 245, 8, 0.95);
+    /*background-color: rgba(237, 245, 8, 0.95);*/
 }
 
 .contactsIcons img {

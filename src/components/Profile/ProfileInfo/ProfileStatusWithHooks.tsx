@@ -21,8 +21,8 @@ export const ProfileStatusWithHooks = ({profileStatus, updateStatus, isOwner}: P
     }
 
     const deActivateEditModeHandler = () => {
-        setEditMode(false);
         updateStatus(status);
+        setEditMode(false);
     }
 
     const changeProfileStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {

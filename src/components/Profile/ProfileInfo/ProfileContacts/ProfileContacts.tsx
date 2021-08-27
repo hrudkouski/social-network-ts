@@ -1,4 +1,5 @@
 import React from "react";
+import p from './ProfileStatus.module.css'
 
 type ContactPropsType = {
   contactTitle: string
@@ -11,10 +12,9 @@ export const Contacts: React.FC<ContactPropsType> = (
       contactValue
     }) => {
   return (
-      <div style={{marginLeft: '20px'}}>
+      <div className={p.wrapper}>
         <span><i>{contactTitle}</i>:
-                <a style={{marginLeft: '10px'}}
-                   href={contactValue}
+                <a href={contactValue}
                    rel={'noreferrer'}
                    target={'_blank'}
                    title={'contact ref'}>
