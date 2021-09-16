@@ -8,38 +8,33 @@ import {Textarea} from "../../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 
 type AddMessageFormDataType = {
-    newMessageBody: string
+  newMessageBody: string
 }
 
-export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, ...props}) => {
+export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, ...props}
+) => {
 
-    const dialogsElements = dialogsPage.dialogs.map(el =>
-        <DialogsItem
-            key={el.id}
-            name={el.name}
-            id={el.id}
-        />);
-    const messagesElements = dialogsPage.messages.map(el =>
-        <Message
-            message={el.message}
-            key={el.id}
-        />);
+  const dialogsElements = dialogsPage.dialogs.map(el =>
+      <DialogsItem key={el.id} name={el.name} id={el.id}/>);
 
-    const addNewMessage = (values: AddMessageFormDataType) => {
-        props.addMessage(values.newMessageBody)
-    }
+  const messagesElements = dialogsPage.messages.map(el =>
+      <Message message={el.message} key={el.id}/>);
 
-    return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {dialogsElements}
-            </div>
-            <div className={s.messages}>
-                {messagesElements}
-            </div>
-            <AddDialogsMessageReduxForm onSubmit={addNewMessage}/>
+  const addNewMessage = (values: AddMessageFormDataType) => {
+    props.addMessage(values.newMessageBody)
+  }
+
+  return (
+      <div className={s.dialogs}>
+        <div className={s.dialogsItems}>
+          {dialogsElements}
         </div>
-    )
+        <div className={s.messages}>
+          {messagesElements}
+        </div>
+        <AddDialogsMessageReduxForm onSubmit={addNewMessage}/>
+      </div>
+  )
 }
 
 const afterSubmit = (result: any, dispatch: any) =>
@@ -49,19 +44,22 @@ const maxLength50 = maxLengthCreator('50');
 
 const AddDialogsMessageForm: React.FC<InjectedFormProps<AddMessageFormDataType>> = (props) => {
 
-    return <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field
-                component={Textarea}
-                name='newMessageBody'
-                placeholder='Enter your message'
-                validate={[required, maxLength50]}
-            />
-        </div>
-        <div>
-            <button>Add message</button>
-        </div>
-    </form>
+  return <form onSubmit={props.handleSubmit}>
+    <div>
+      <Field
+          component={Textarea}
+          name='newMessageBody'
+          placeholder='Enter your message'
+          validate={[required, maxLength50]}
+      />
+    </div>
+    <div>
+      <button>Add message</button>
+    </div>
+  </form>
 }
 
-const AddDialogsMessageReduxForm = reduxForm<AddMessageFormDataType>({form: 'dialogsAddMessageForm', onSubmitSuccess: afterSubmit,})(AddDialogsMessageForm);
+const AddDialogsMessageReduxForm = reduxForm<AddMessageFormDataType>({
+  form: 'dialogsAddMessageForm',
+  onSubmitSuccess: afterSubmit,
+})(AddDialogsMessageForm);

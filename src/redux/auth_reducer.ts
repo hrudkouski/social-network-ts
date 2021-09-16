@@ -2,13 +2,13 @@ import {AppThunk} from "./redux-store";
 import {authApi, securityApi} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-// Actions
+//Actions
 const SET_AUTH_USERS_DATA = 'social-network-ts/auth_reducer/SET_AUTH_USERS_DATA';
 const TOGGLE_IS_FETCHING = 'social-network-ts/auth_reducer/TOGGLE_IS_FETCHING';
 const GET_CAPTCHA_URL = 'social-network-ts/auth_reducer/GET_CAPTCHA_URL';
 
 //Types
-export type AuthPageType = typeof initialState;
+type AuthInitialStateType = typeof initialState;
 export type AuthActionTypes =
     | ReturnType<typeof setAuthUsersData>
     | ReturnType<typeof toggleIsFetching>
@@ -24,8 +24,8 @@ const initialState = {
   captchaURL: null as string | null, // if null, then captcha is not required
 }
 
-// Reducer
-export const authReducer = (state: AuthPageType = initialState, action: AuthActionTypes): AuthPageType => {
+//Reducer
+export const authReducer = (state = initialState, action: AuthActionTypes): AuthInitialStateType => {
   switch (action.type) {
     case SET_AUTH_USERS_DATA:
       return {
@@ -41,7 +41,7 @@ export const authReducer = (state: AuthPageType = initialState, action: AuthActi
   }
 }
 
-// Action Creators
+//Action Creators
 export const setAuthUsersData = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
   type: SET_AUTH_USERS_DATA,
   payload: {userId, login, email, isAuth}
@@ -57,7 +57,7 @@ export const getCaptchaURLSuccess = (captchaURL: string | null) => ({
   payload: {captchaURL}
 } as const)
 
-// Thunk Creators
+//Thunk Creators
 export const getAuthUserData = (): AppThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));

@@ -1,4 +1,4 @@
-import {addMessage, DialogPageType} from "../../redux/dialogs_reducer";
+import {addMessage, DialogPageInitialStateType} from "../../redux/dialogs_reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {compose, Dispatch} from "redux";
@@ -7,7 +7,7 @@ import React from "react";
 import {Dialogs} from "./Dialogs";
 
 type MapStatePropsType = {
-    dialogsPage: DialogPageType
+    dialogsPage: DialogPageInitialStateType
 }
 type MapDispatchToPropsType = {
     addMessage: (newMessageBody: string) => void

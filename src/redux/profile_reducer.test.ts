@@ -1,6 +1,6 @@
-import {addPost, PostType, ProfilePageType, profileReducer, ProfileUserType} from "./profile_reducer";
+import {addPost, PostType, ProfilePageInitialStateType, profileReducer, ProfileUserType} from "./profile_reducer";
 
-let startState: ProfilePageType;
+let startState: ProfilePageInitialStateType;
 
 beforeEach(() => {
     startState = {

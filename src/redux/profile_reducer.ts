@@ -1,10 +1,11 @@
-import {AppDispatch, AppStateType} from "./redux-store";
+import {AppDispatch, AppThunk} from "./redux-store";
 import {profileApi} from "../api/api";
 import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm/ProfileDataForm";
 import {toggleIsFetching} from "./auth_reducer";
 import {stopSubmit} from "redux-form";
+import {PhotoType} from "../types/types";
 
-// Actions
+//Actions
 const ADD_POST = 'social-network-ts/profile_reducer/ADD_POST';
 const SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE';
 const SET_PROFILE_STATUS = 'social-network-ts/profile_reducer/SET_PROFILE_STATUS';
@@ -13,14 +14,11 @@ const SAVE_PHOTO_SUCCESS = 'social-network-ts/profile_reducer/SAVE_PHOTO_SUCCESS
 
 //Types
 export type PostType = {
-  id: number,
-  message: string,
+  id: number
+  message: string
   likesCount: number
 }
-type PhotoType = {
-  small: string
-  large: string
-}
+
 export type ContactsType = {
   facebook: string
   website: string
@@ -40,7 +38,7 @@ export type ProfileUserType = {
   userId: number
   photos: PhotoType
 }
-export type ProfilePageType = {
+export type ProfilePageInitialStateType = {
   posts: Array<PostType>
   newPostText: string
   profileUser: ProfileUserType | null
@@ -51,14 +49,14 @@ export type setUsersProfileAT = ReturnType<typeof setUsersProfile>
 export type setProfileStatusAT = ReturnType<typeof setProfileStatus>
 export type updateProfileStatusAT = ReturnType<typeof updateProfileStatus>
 export type savePhotoSuccessAT = ReturnType<typeof savePhotoSuccess>
-export type ActionsTypesPR = addPostAT
+export type ProfileActionTypes = addPostAT
     | setUsersProfileAT
     | updateProfileStatusAT
     | savePhotoSuccessAT
     | setProfileStatusAT;
 
 //Initial State
-const initialState: ProfilePageType = {
+const initialState: ProfilePageInitialStateType = {
   posts: [
     {
       id: 1,
@@ -81,8 +79,8 @@ const initialState: ProfilePageType = {
   profileStatus: '',
 };
 
-// Reducer
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypesPR): ProfilePageType => {
+//Reducer
+export const profileReducer = (state = initialState, action: ProfileActionTypes): ProfilePageInitialStateType => {
   switch (action.type) {
     case ADD_POST:
       const newPost: PostType = {
@@ -122,28 +120,32 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
   }
 }
 
-// Action Creators
+//Action Creators
 export const addPost = (newPostMessage: string) => {
   return {type: ADD_POST, newPostMessage} as const
 }
+
 export const setUsersProfile = (profileUser: ProfileUserType) => {
   return {
     type: SET_USER_PROFILE,
     profileUser,
   } as const
 }
+
 export const setProfileStatus = (profileStatus: string) => {
   return {
     type: SET_PROFILE_STATUS,
     profileStatus,
   } as const
 }
+
 export const updateProfileStatus = (newStatus: string) => {
   return {
     type: UPDATE_PROFILE_STATUS,
     newStatus,
   } as const
 }
+
 export const savePhotoSuccess = (photo: PhotoType) => {
   return {
     type: SAVE_PHOTO_SUCCESS,
@@ -151,31 +153,35 @@ export const savePhotoSuccess = (photo: PhotoType) => {
   } as const
 }
 
-// ThunkCreator
+
+//ThunkCreator
 export const getUserProfile = (userID: number) => {
   return async (dispatch: AppDispatch) => {
     let response = await profileApi.getProfile(userID)
     dispatch(setUsersProfile(response.data));
   }
 }
+
 export const getStatus = (userID: number) => {
   return async (dispatch: AppDispatch) => {
     let response = await profileApi.getStatus(userID)
     dispatch(setProfileStatus(response.data));
   }
 }
+
 export const updateStatus = (newStatus: string) => {
   return async (dispatch: AppDispatch) => {
     try {
       let response = await profileApi.updateStatus(newStatus)
       if (response.data.resultCode === 0) {
-        dispatch(setProfileStatus(response.data.status));
+        dispatch(setProfileStatus(newStatus));
       }
     } catch (e) {
       alert(e)
     }
   }
 }
+
 export const savePhoto = (file: File) => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -188,17 +194,16 @@ export const savePhoto = (file: File) => {
     }
   }
 }
-export const saveProfile = (formData: ProfileFormDataType) => {
-  return async (dispatch: AppDispatch, getState: () => AppStateType) => {
+
+export const saveProfile = (formData: ProfileFormDataType): AppThunk => {
+  return async (dispatch, getState) => {
     const userID = getState().auth.userId;
     dispatch(toggleIsFetching(true));
     const response = await profileApi.saveProfile(formData)
     if (response.data.resultCode === 0) {
       if (userID) {
-        // @ts-ignore
-        dispatch(getUserProfile(userID));
+        await dispatch(getUserProfile(userID));
       } else {
-        // @ts-ignore
         dispatch(stopSubmit('edit_profile', {
           _error: response.data.messages[0]
         }))
