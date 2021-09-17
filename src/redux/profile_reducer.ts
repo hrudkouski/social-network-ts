@@ -6,11 +6,13 @@ import {stopSubmit} from "redux-form";
 import {PhotoType} from "../types/types";
 
 //Actions
-const ADD_POST = 'social-network-ts/profile_reducer/ADD_POST';
-const SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE';
-const SET_PROFILE_STATUS = 'social-network-ts/profile_reducer/SET_PROFILE_STATUS';
-const UPDATE_PROFILE_STATUS = 'social-network-ts/profile_reducer/UPDATE_PROFILE_STATUS';
-const SAVE_PHOTO_SUCCESS = 'social-network-ts/profile_reducer/SAVE_PHOTO_SUCCESS';
+enum Profile {
+  ADD_POST = 'social-network-ts/profile_reducer/ADD_POST',
+  SET_USER_PROFILE = 'social-network-ts/profile_reducer/SET_USER_PROFILE',
+  SET_PROFILE_STATUS = 'social-network-ts/profile_reducer/SET_PROFILE_STATUS',
+  UPDATE_PROFILE_STATUS = 'social-network-ts/profile_reducer/UPDATE_PROFILE_STATUS',
+  SAVE_PHOTO_SUCCESS = 'social-network-ts/profile_reducer/SAVE_PHOTO_SUCCESS',
+}
 
 //Types
 export type PostType = {
@@ -18,7 +20,6 @@ export type PostType = {
   message: string
   likesCount: number
 }
-
 export type ContactsType = {
   facebook: string
   website: string
@@ -82,7 +83,7 @@ const initialState: ProfilePageInitialStateType = {
 //Reducer
 export const profileReducer = (state = initialState, action: ProfileActionTypes): ProfilePageInitialStateType => {
   switch (action.type) {
-    case ADD_POST:
+    case Profile.ADD_POST:
       const newPost: PostType = {
         id: new Date().getTime(),
         message: action.newPostMessage,
@@ -92,22 +93,22 @@ export const profileReducer = (state = initialState, action: ProfileActionTypes)
         ...state,
         posts: [...state.posts, newPost],
       };
-    case SET_USER_PROFILE:
+    case Profile.SET_USER_PROFILE:
       return {
         ...state,
         profileUser: action.profileUser
       }
-    case SET_PROFILE_STATUS:
+    case Profile.SET_PROFILE_STATUS:
       return {
         ...state,
         profileStatus: action.profileStatus,
       }
-    case UPDATE_PROFILE_STATUS:
+    case Profile.UPDATE_PROFILE_STATUS:
       return {
         ...state,
         profileStatus: action.newStatus,
       }
-    case SAVE_PHOTO_SUCCESS:
+    case Profile.SAVE_PHOTO_SUCCESS:
       return {
         ...state,
         profileUser: {
@@ -122,33 +123,33 @@ export const profileReducer = (state = initialState, action: ProfileActionTypes)
 
 //Action Creators
 export const addPost = (newPostMessage: string) => {
-  return {type: ADD_POST, newPostMessage} as const
+  return {type: Profile.ADD_POST, newPostMessage} as const
 }
 
 export const setUsersProfile = (profileUser: ProfileUserType) => {
   return {
-    type: SET_USER_PROFILE,
+    type: Profile.SET_USER_PROFILE,
     profileUser,
   } as const
 }
 
 export const setProfileStatus = (profileStatus: string) => {
   return {
-    type: SET_PROFILE_STATUS,
+    type: Profile.SET_PROFILE_STATUS,
     profileStatus,
   } as const
 }
 
 export const updateProfileStatus = (newStatus: string) => {
   return {
-    type: UPDATE_PROFILE_STATUS,
+    type: Profile.UPDATE_PROFILE_STATUS,
     newStatus,
   } as const
 }
 
 export const savePhotoSuccess = (photo: PhotoType) => {
   return {
-    type: SAVE_PHOTO_SUCCESS,
+    type: Profile.SAVE_PHOTO_SUCCESS,
     photo,
   } as const
 }

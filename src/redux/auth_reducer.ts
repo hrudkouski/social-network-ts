@@ -3,9 +3,11 @@ import {authApi, securityApi} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 //Actions
-const SET_AUTH_USERS_DATA = 'social-network-ts/auth_reducer/SET_AUTH_USERS_DATA';
-const TOGGLE_IS_FETCHING = 'social-network-ts/auth_reducer/TOGGLE_IS_FETCHING';
-const GET_CAPTCHA_URL = 'social-network-ts/auth_reducer/GET_CAPTCHA_URL';
+enum Auth {
+  SET_AUTH_USERS_DATA = 'social-network-ts/auth_reducer/SET_AUTH_USERS_DATA',
+  TOGGLE_IS_FETCHING = 'social-network-ts/auth_reducer/TOGGLE_IS_FETCHING',
+  GET_CAPTCHA_URL = 'social-network-ts/auth_reducer/GET_CAPTCHA_URL',
+}
 
 //Types
 type AuthInitialStateType = typeof initialState;
@@ -27,14 +29,14 @@ const initialState = {
 //Reducer
 export const authReducer = (state = initialState, action: AuthActionTypes): AuthInitialStateType => {
   switch (action.type) {
-    case SET_AUTH_USERS_DATA:
+    case Auth.SET_AUTH_USERS_DATA:
       return {
         ...state,
         ...action.payload
       }
-    case TOGGLE_IS_FETCHING:
+    case Auth.TOGGLE_IS_FETCHING:
       return {...state, isFetching: action.isFetching}
-    case GET_CAPTCHA_URL:
+    case Auth.GET_CAPTCHA_URL:
       return {...state, ...action.payload}
     default:
       return state;
@@ -43,17 +45,17 @@ export const authReducer = (state = initialState, action: AuthActionTypes): Auth
 
 //Action Creators
 export const setAuthUsersData = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
-  type: SET_AUTH_USERS_DATA,
+  type: Auth.SET_AUTH_USERS_DATA,
   payload: {userId, login, email, isAuth}
 } as const)
 
 export const toggleIsFetching = (isFetching: boolean) => ({
-  type: TOGGLE_IS_FETCHING,
+  type: Auth.TOGGLE_IS_FETCHING,
   isFetching
 } as const)
 
 export const getCaptchaURLSuccess = (captchaURL: string | null) => ({
-  type: GET_CAPTCHA_URL,
+  type: Auth.GET_CAPTCHA_URL,
   payload: {captchaURL}
 } as const)
 

@@ -1,5 +1,7 @@
 //Actions
-const ADD_MESSAGE = 'social-network-ts/dialogs_reducer/ADD_MESSAGE';
+enum Dialogs {
+  ADD_MESSAGE = 'social-network-ts/dialogs_reducer/ADD_MESSAGE',
+}
 
 //Types
 export type MessageType = {
@@ -41,7 +43,7 @@ let initialState: DialogPageInitialStateType = {
 //Reducer
 export const dialogsReducer = (state = initialState, action: DialogsActionTypes): DialogPageInitialStateType => {
   switch (action.type) {
-    case ADD_MESSAGE:
+    case Dialogs.ADD_MESSAGE:
       const newMessagePost: MessageType = {
         id: new Date().getTime(),
         message: action.newMessageBody
@@ -57,6 +59,6 @@ export const dialogsReducer = (state = initialState, action: DialogsActionTypes)
 
 //Action Creators
 export const addMessage = (newMessageBody: string) => ({
-  type: ADD_MESSAGE,
+  type: Dialogs.ADD_MESSAGE,
   newMessageBody
 }) as const

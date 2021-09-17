@@ -1,52 +1,53 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from "./Users.module.css";
 import {UserType} from "../../redux/users_reducer";
 import {Paginator} from "../../common/Paginator/Paginator";
 import {User} from './User/User';
 
 type UsersPresentType = {
-    totalUserCount: number
-    pageSize: number
-    onPageChanged: (pageNumber: number) => void
-    currentPage: number
-    users: Array<UserType>
-    followUser: (userID: number) => void
-    unFollowUser: (userID: number) => void
-    followingInProgress: Array<number>
-    unFollow: (userID: number) => void
-    follow: (userID: number) => void
+  totalUserCount: number
+  pageSize: number
+  onPageChanged: (pageNumber: number) => void
+  currentPage: number
+  users: Array<UserType>
+  followUser: (userID: number) => void
+  unFollowUser: (userID: number) => void
+  followingInProgress: Array<number>
+  unFollow: (userID: number) => void
+  follow: (userID: number) => void
 }
-export const Users: React.FC<UsersPresentType> = (
+export const Users: FC<UsersPresentType> = (
     {
-        currentPage,
-        onPageChanged,
-        users,
-        followingInProgress,
-        follow,
-        unFollow,
-        totalUserCount,
-        pageSize
+      users,
+      followingInProgress,
+      follow,
+      unFollow,
+      currentPage,
+      onPageChanged,
+      totalUserCount,
+      pageSize
     }
 ) => {
 
-    return (
-        <div className={s.wrapper}>
-            <Paginator
-                portionSize={15}
-                totalItemCount={totalUserCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChanged={onPageChanged}/>
+  return (
+      <div className={s.wrapper}>
+        <h2>Users</h2>
+        <Paginator
+            portionSize={15}
+            totalItemCount={totalUserCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChanged={onPageChanged}/>
 
-            {
-                users.map((el, i) => <User
-                    key={i}
-                    followingInProgress={followingInProgress}
-                    unFollow={unFollow}
-                    follow={follow}
-                    user={el}/>
-                )
-            }
-        </div>
-    )
+        {
+          users.map((el, i) => <User
+              key={i}
+              followingInProgress={followingInProgress}
+              unFollow={unFollow}
+              follow={follow}
+              user={el}/>
+          )
+        }
+      </div>
+  )
 }

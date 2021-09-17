@@ -17,18 +17,17 @@ export type AppActionType =
     | AuthActionTypes
     | FormAction
     | AppActionTypes
-// export type StoreType = typeof store;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionType>
 
 let rootReducer = combineReducers({
-    profilePage: profileReducer,
-    dialogsPage: dialogsReducer,
-    usersPage: usersReducer,
-    sideBar: sideBarReducer,
-    auth: authReducer,
-    form: formReducer,
-    app: appReducer
+  profilePage: profileReducer,
+  dialogsPage: dialogsReducer,
+  usersPage: usersReducer,
+  sideBar: sideBarReducer,
+  auth: authReducer,
+  app: appReducer,
+  form: formReducer,
 })
 
 // @ts-ignore
@@ -37,9 +36,9 @@ const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunkMiddleWare)
 ));
 
-// const store = createStore(rootReducer, applyMiddleware(thunkMiddleWare));
+// @ts-ignore
+window.__store__ = store;
 
 export default store;
 
-// @ts-ignore
-window.__store__ = store;
+

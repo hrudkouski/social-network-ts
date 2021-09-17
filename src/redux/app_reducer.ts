@@ -2,7 +2,9 @@ import {AppThunk} from "./redux-store";
 import {getAuthUserData, toggleIsFetching} from "./auth_reducer";
 
 //Actions
-const SET_INITIALIZED = 'social-network-ts/app_reducer/SET_INITIALIZED'
+enum App {
+  SET_INITIALIZED = 'social-network-ts/app_reducer/SET_INITIALIZED',
+}
 
 //Types
 export type AppActionTypes = ReturnType<typeof setInitialized>;
@@ -16,7 +18,7 @@ const initialState = {
 //Reducer
 export const appReducer = (state = initialState, action: AppActionTypes): AppInitialStateType => {
   switch (action.type) {
-    case SET_INITIALIZED:
+    case App.SET_INITIALIZED:
       return {
         ...state,
         initialized: action.value,
@@ -28,7 +30,7 @@ export const appReducer = (state = initialState, action: AppActionTypes): AppIni
 
 //Action Creators
 export const setInitialized = (value: boolean) => {
-  return {type: SET_INITIALIZED, value} as const
+  return {type: App.SET_INITIALIZED, value} as const
 }
 
 //ThunkCreator
