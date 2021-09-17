@@ -54,15 +54,17 @@ export const profileApi = {
 
 export const authApi = {
   amIsAuth() {
-    return instance.get(`auth/me`)
+    return instance.get<AuthResponseType>(`auth/me`)
+        .then(res => res.data)
   },
-  login(email: string, password: string, rememberMe: boolean = false, captcha: string | null) {
-    return instance.post(`auth/login`, {
+  login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
+    return instance.post<LoginResponseType>(`auth/login`, {
       email, password, rememberMe, captcha
     })
+        .then(res => res.data)
   },
   logout() {
-    return instance.delete(`auth/login`)
+    return instance.delete<LogOutResponseType>(`auth/login`).then(res => res.data)
   }
 }
 
@@ -72,11 +74,37 @@ export const securityApi = {
   },
 }
 
+//Types
 type GetCaptchaUrlResponseType = {
   url: string | null
 }
 
+type AuthResponseType = {
+  resultCode: ResultCodesEnum
+  messages: string[]
+  data: { id: number, email: string, login: string }
+  fieldsErrors: string[]
+}
 
+type LoginResponseType = {
+  resultCode: ResultCodesEnum
+  messages: string[]
+  data: { userId: number }
+  fieldsErrors: string[]
+}
+
+type LogOutResponseType = {
+  resultCode: ResultCodesEnum
+  messages: string[]
+  data: {}
+  fieldsErrors: string[]
+}
+
+export enum ResultCodesEnum {
+  Success = 0,
+  Error = 1,
+  CaptchaIsRequired = 10,
+}
 
 
 

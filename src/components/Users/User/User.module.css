@@ -22,10 +22,6 @@
     background-color: #59fc02;
 }
 
-button:disabled {
-    cursor: not-allowed;
-}
-
 .unFollow {
     background-color: #fc0202;
     font-weight: bold;
@@ -37,3 +33,12 @@ button:disabled {
     font-weight: bold;
     border-radius: 10px;
 }
+
+.button button:hover {
+    cursor: pointer;
+}
+
+.button button:disabled {
+    cursor: not-allowed;
+}
+

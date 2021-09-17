@@ -152,7 +152,7 @@ export const getResponseUsers = (currentPage: number): AppThunk => {
   }
 }
 
-const followUnFollowFlow = async (dispatch: Dispatch, userID: number, apiMethod: any, actionCreator: any) => {
+const _followUnFollowFlow = async (dispatch: Dispatch, userID: number, apiMethod: any, actionCreator: (userID: number) => FollowAT | UnFollowAT) => {
   dispatch(toggleFollowingProgress(true, userID));
   let data = await apiMethod(userID);
   if (data.resultCode === 0) {
@@ -162,29 +162,13 @@ const followUnFollowFlow = async (dispatch: Dispatch, userID: number, apiMethod:
 };
 
 export const follow = (userID: number): AppThunk => {
-  // return async (dispatch) => {
-  //     dispatch(toggleFollowingProgress(true, userID));
-  //     let data = await usersApi.follow(userID)
-  //     if (data.resultCode === 0) {
-  //         dispatch(followUser(userID))
-  //     }
-  //     dispatch(toggleFollowingProgress(false, userID));
-  // }
   return async (dispatch) => {
-    await followUnFollowFlow(dispatch, userID, usersApi.follow, followUser);
+    await _followUnFollowFlow(dispatch, userID, usersApi.follow, followUser);
   }
 }
 
 export const unFollow = (userID: number): AppThunk => {
-  // return async (dispatch) => {
-  //     dispatch(toggleFollowingProgress(true, userID));
-  //     let data = await usersApi.unFollow(userID)
-  //     if (data.resultCode === 0) {
-  //         dispatch(unFollowUser(userID))
-  //     }
-  //     dispatch(toggleFollowingProgress(false, userID));
-  // }
   return async (dispatch) => {
-    await followUnFollowFlow(dispatch, userID, usersApi.unFollow, unFollowUser);
+    await _followUnFollowFlow(dispatch, userID, usersApi.unFollow, unFollowUser);
   }
 }

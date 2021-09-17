@@ -1,5 +1,5 @@
 import {AppThunk} from "./redux-store";
-import {authApi, securityApi} from "../api/api";
+import {authApi, ResultCodesEnum, securityApi} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 //Actions
@@ -64,9 +64,9 @@ export const getAuthUserData = (): AppThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     let response = await authApi.amIsAuth()
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(toggleIsFetching(false));
-      let {id, login, email} = response.data.data;
+      let {id, login, email} = response.data;
       dispatch(setAuthUsersData(id, login, email, true));
     }
   }
@@ -76,12 +76,12 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     let response = await authApi.login(email, password, rememberMe, captcha)
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(getAuthUserData())
-    } else if (response.data.resultCode === 10) {
+    } else if (response.resultCode === ResultCodesEnum.CaptchaIsRequired) {
       dispatch(getCaptchaURL())
     } else {
-      let message = response.data.messages.length > 0 ? response.data.messages : 'Some error';
+      let message = response.messages.length > 0 ? response.messages : 'Some error';
       let action = stopSubmit('login', {_error: message});
       dispatch(action)
     }
@@ -93,7 +93,7 @@ export const logout = (): AppThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     let response = await authApi.logout()
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(toggleIsFetching(false));
       dispatch(setAuthUsersData(null, null, null, false))
     }
