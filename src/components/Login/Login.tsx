@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {InjectedFormProps, reduxForm} from "redux-form";
 import {createField, Input} from "../../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {useDispatch, useSelector} from "react-redux";
@@ -21,6 +21,8 @@ export type LoginFormDataType = {
   captcha: string | null
 }
 
+type LoginFormValuesTypeKeys = Extract<keyof LoginFormDataType, string>
+
 const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, LoginPropsType> & LoginPropsType>
     = (({
           handleSubmit,
@@ -30,27 +32,15 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, LoginPropsType> &
   return (
       <form onSubmit={handleSubmit}>
 
-        <Field
-            validate={[required]}
-            component={Input}
-            name='email'
-            placeholder='email'/>
-        <Field
-            validate={[required]}
-            component={Input}
-            name='password'
-            placeholder='password'
-            type={'password'}/>
-        <Field
-            component={Input}
-            name='rememberMe'
-            type='checkbox'/> <span>remember me</span>
+        {createField<LoginFormValuesTypeKeys>('email', 'email', Input, [required])}
+        {createField<LoginFormValuesTypeKeys>('password', 'password', Input, [required], {type: 'password'})}
+        {createField<LoginFormValuesTypeKeys>('rememberMe', 'email', Input, [required], {type: 'checkbox'})}
 
         <div>
           {captchaURL && <img src={captchaURL} alt={captchaURL}/>}
         </div>
 
-        {captchaURL && createField('captcha', 'Symbols from image', Input, [])}
+        {captchaURL && createField<LoginFormValuesTypeKeys>('captcha', 'Symbols from image', Input, [])}
 
         <div>
           <button>Login</button>
