@@ -1,23 +1,9 @@
+import {GetActionsTypes} from "./redux-store";
+
 //Actions
 enum Dialogs {
   ADD_MESSAGE = 'social-network-ts/dialogs_reducer/ADD_MESSAGE',
 }
-
-//Types
-export type MessageType = {
-  id: number
-  message: string
-}
-export type DialogType = {
-  id: number
-  name: string
-}
-export type DialogPageInitialStateType = {
-  dialogs: Array<DialogType>
-  messages: Array<MessageType>
-  newMessageText: string
-}
-export type DialogsActionTypes = ReturnType<typeof addMessage>
 
 //Initial State
 let initialState: DialogPageInitialStateType = {
@@ -58,7 +44,25 @@ export const dialogsReducer = (state = initialState, action: DialogsActionTypes)
 }
 
 //Action Creators
-export const addMessage = (newMessageBody: string) => ({
-  type: Dialogs.ADD_MESSAGE,
-  newMessageBody
-}) as const
+export const dialogsActions = {
+  addMessage: (newMessageBody: string) => ({
+    type: Dialogs.ADD_MESSAGE,
+    newMessageBody
+  }) as const
+}
+
+//Types
+export type MessageType = {
+  id: number
+  message: string
+}
+export type DialogType = {
+  id: number
+  name: string
+}
+export type DialogPageInitialStateType = {
+  dialogs: Array<DialogType>
+  messages: Array<MessageType>
+  newMessageText: string
+}
+export type DialogsActionTypes = GetActionsTypes<typeof dialogsActions>

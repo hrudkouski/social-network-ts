@@ -1,8 +1,5 @@
 import {DialogsActionTypes} from "./dialogs_reducer"; // Refactoring
 
-//Types
-export type SideBarType = {}
-
 //Initial State
 let initialState: SideBarType = {};
 
@@ -13,3 +10,6 @@ export const sideBarReducer = (state = initialState, action: DialogsActionTypes)
       return state;
   }
 }
+
+//Types
+export type SideBarType = {}

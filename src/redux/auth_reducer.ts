@@ -1,4 +1,4 @@
-import {AppThunk} from "./redux-store";
+import {AppThunk, GetActionsTypes} from "./redux-store";
 import {ResultCodesEnum} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {authApi} from "../api/authApi";
@@ -10,13 +10,6 @@ enum Auth {
   TOGGLE_IS_FETCHING = 'social-network-ts/auth_reducer/TOGGLE_IS_FETCHING',
   GET_CAPTCHA_URL = 'social-network-ts/auth_reducer/GET_CAPTCHA_URL',
 }
-
-//Types
-type AuthInitialStateType = typeof initialState;
-export type AuthActionTypes =
-    | ReturnType<typeof setAuthUsersData>
-    | ReturnType<typeof toggleIsFetching>
-    | ReturnType<typeof getCaptchaURLSuccess>
 
 //Initial State
 const initialState = {
@@ -46,37 +39,37 @@ export const authReducer = (state = initialState, action: AuthActionTypes): Auth
 }
 
 //Action Creators
-export const setAuthUsersData = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
-  type: Auth.SET_AUTH_USERS_DATA,
-  payload: {userId, login, email, isAuth}
-} as const)
-
-export const toggleIsFetching = (isFetching: boolean) => ({
-  type: Auth.TOGGLE_IS_FETCHING,
-  isFetching
-} as const)
-
-export const getCaptchaURLSuccess = (captchaURL: string | null) => ({
-  type: Auth.GET_CAPTCHA_URL,
-  payload: {captchaURL}
-} as const)
+export const authActions = {
+  setAuthUsersData: (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
+    type: Auth.SET_AUTH_USERS_DATA,
+    payload: {userId, login, email, isAuth}
+  } as const),
+  toggleIsFetching: (isFetching: boolean) => ({
+    type: Auth.TOGGLE_IS_FETCHING,
+    isFetching
+  } as const),
+  getCaptchaURLSuccess: (captchaURL: string | null) => ({
+    type: Auth.GET_CAPTCHA_URL,
+    payload: {captchaURL}
+  } as const),
+}
 
 //Thunk Creators
 export const getAuthUserData = (): AppThunk => {
   return async (dispatch) => {
-    dispatch(toggleIsFetching(true));
+    dispatch(authActions.toggleIsFetching(true));
     let res = await authApi.amIsAuth()
     if (res.resultCode === ResultCodesEnum.Success) {
-      dispatch(toggleIsFetching(false));
+      dispatch(authActions.toggleIsFetching(false));
       let {id, login, email} = res.data;
-      dispatch(setAuthUsersData(id, login, email, true));
+      dispatch(authActions.setAuthUsersData(id, login, email, true));
     }
   }
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunk => {
   return async (dispatch) => {
-    dispatch(toggleIsFetching(true));
+    dispatch(authActions.toggleIsFetching(true));
     let res = await authApi.login(email, password, rememberMe, captcha)
     if (res.resultCode === ResultCodesEnum.Success) {
       dispatch(getAuthUserData())
@@ -87,17 +80,17 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
       let action = stopSubmit('login', {_error: message});
       dispatch(action)
     }
-    dispatch(toggleIsFetching(false));
+    dispatch(authActions.toggleIsFetching(false));
   }
 }
 
 export const logout = (): AppThunk => {
   return async (dispatch) => {
-    dispatch(toggleIsFetching(true));
+    dispatch(authActions.toggleIsFetching(true));
     let res = await authApi.logout()
     if (res.resultCode === ResultCodesEnum.Success) {
-      dispatch(toggleIsFetching(false));
-      dispatch(setAuthUsersData(null, null, null, false))
+      dispatch(authActions.toggleIsFetching(false));
+      dispatch(authActions.setAuthUsersData(null, null, null, false))
     }
   }
 }
@@ -106,6 +99,10 @@ export const getCaptchaURL = (): AppThunk => {
   return async (dispatch) => {
     const res = await securityApi.getCaptcha()
     const captchaURL = res.url;
-    dispatch(getCaptchaURLSuccess(captchaURL))
+    dispatch(authActions.getCaptchaURLSuccess(captchaURL))
   }
 }
+
+//Types
+type AuthInitialStateType = typeof initialState;
+export type AuthActionTypes = GetActionsTypes<typeof authActions>

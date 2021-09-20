@@ -1,14 +1,10 @@
-import {AppThunk} from "./redux-store";
-import {getAuthUserData, toggleIsFetching} from "./auth_reducer";
+import {AppThunk, GetActionsTypes} from "./redux-store";
+import {authActions, getAuthUserData} from "./auth_reducer";
 
 //Actions
 enum App {
   SET_INITIALIZED = 'social-network-ts/app_reducer/SET_INITIALIZED',
 }
-
-//Types
-export type AppActionTypes = ReturnType<typeof setInitialized>;
-type AppInitialStateType = typeof initialState;
 
 //Initial State
 const initialState = {
@@ -29,19 +25,23 @@ export const appReducer = (state = initialState, action: AppActionTypes): AppIni
 }
 
 //Action Creators
-export const setInitialized = (value: boolean) => {
-  return {type: App.SET_INITIALIZED, value} as const
+export const appActions = {
+  setInitialized: (value: boolean) => ({type: App.SET_INITIALIZED, value}) as const,
 }
 
 //ThunkCreator
 export const initializeApp = (): AppThunk => {
   return (dispatch) => {
-    dispatch(toggleIsFetching(true));
+    dispatch(authActions.toggleIsFetching(true));
     let res = dispatch(getAuthUserData());
     Promise.all([res])
         .then(() => {
-          dispatch(setInitialized(true))
-          dispatch(toggleIsFetching(false));
+          dispatch(appActions.setInitialized(true))
+          dispatch(authActions.toggleIsFetching(false));
         })
   }
 }
+
+//Types
+type AppInitialStateType = typeof initialState
+export type AppActionTypes = GetActionsTypes<typeof appActions>;

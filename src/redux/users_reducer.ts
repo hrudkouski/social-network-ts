@@ -1,4 +1,4 @@
-import {AppThunk, InferActionsTypes} from "./redux-store";
+import {AppThunk, GetActionsTypes} from "./redux-store";
 import {Dispatch} from "redux";
 import {updateObjectInArray} from "../utils/objects-helpers/objects-helpers";
 import {PhotoType} from "../types/types";
@@ -14,25 +14,6 @@ enum Users {
   TOGGLE_IS_FETCHING = 'social-network-ts/users_reducer/TOGGLE_IS_FETCHING',
   TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network-ts/users_reducer/TOGGLE_IS_FOLLOWING_PROGRESS',
 }
-
-//Types
-export type UserType = {
-  name: string
-  id: number
-  uniqueUrlName: string
-  photos: PhotoType
-  status: string
-  followed: boolean
-}
-export type UsersPageInitialStateType = {
-  users: Array<UserType>
-  pageSize: number
-  totalUserCount: number
-  currentPage: number
-  isFetching: boolean
-  followingInProgress: Array<number>
-}
-export type UsersActionTypes = InferActionsTypes<typeof usersActions>
 
 //Initial State
 const initialState: UsersPageInitialStateType = {
@@ -148,3 +129,22 @@ export const unFollow = (userID: number): AppThunk => {
     await _followUnFollowFlow(dispatch, userID, usersApi.unFollow, usersActions.unFollowUser);
   }
 }
+
+//Types
+export type UserType = {
+  name: string
+  id: number
+  uniqueUrlName: string
+  photos: PhotoType
+  status: string
+  followed: boolean
+}
+export type UsersPageInitialStateType = {
+  users: Array<UserType>
+  pageSize: number
+  totalUserCount: number
+  currentPage: number
+  isFetching: boolean
+  followingInProgress: Array<number>
+}
+export type UsersActionTypes = GetActionsTypes<typeof usersActions>
