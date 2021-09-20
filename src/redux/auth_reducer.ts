@@ -1,6 +1,8 @@
 import {AppThunk} from "./redux-store";
-import {authApi, ResultCodesEnum, securityApi} from "../api/api";
+import {ResultCodesEnum} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {authApi} from "../api/authApi";
+import {securityApi} from "../api/securityApi";
 
 //Actions
 enum Auth {
@@ -63,10 +65,10 @@ export const getCaptchaURLSuccess = (captchaURL: string | null) => ({
 export const getAuthUserData = (): AppThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
-    let response = await authApi.amIsAuth()
-    if (response.resultCode === ResultCodesEnum.Success) {
+    let res = await authApi.amIsAuth()
+    if (res.resultCode === ResultCodesEnum.Success) {
       dispatch(toggleIsFetching(false));
-      let {id, login, email} = response.data;
+      let {id, login, email} = res.data;
       dispatch(setAuthUsersData(id, login, email, true));
     }
   }
@@ -75,13 +77,13 @@ export const getAuthUserData = (): AppThunk => {
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
-    let response = await authApi.login(email, password, rememberMe, captcha)
-    if (response.resultCode === ResultCodesEnum.Success) {
+    let res = await authApi.login(email, password, rememberMe, captcha)
+    if (res.resultCode === ResultCodesEnum.Success) {
       dispatch(getAuthUserData())
-    } else if (response.resultCode === ResultCodesEnum.CaptchaIsRequired) {
+    } else if (res.resultCode === ResultCodesEnum.CaptchaIsRequired) {
       dispatch(getCaptchaURL())
     } else {
-      let message = response.messages.length > 0 ? response.messages : 'Some error';
+      let message = res.messages.length > 0 ? res.messages : 'Some error';
       let action = stopSubmit('login', {_error: message});
       dispatch(action)
     }
@@ -92,8 +94,8 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 export const logout = (): AppThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
-    let response = await authApi.logout()
-    if (response.resultCode === ResultCodesEnum.Success) {
+    let res = await authApi.logout()
+    if (res.resultCode === ResultCodesEnum.Success) {
       dispatch(toggleIsFetching(false));
       dispatch(setAuthUsersData(null, null, null, false))
     }
@@ -102,8 +104,8 @@ export const logout = (): AppThunk => {
 
 export const getCaptchaURL = (): AppThunk => {
   return async (dispatch) => {
-    const response = await securityApi.getCaptcha()
-    const captchaURL = response.data.url;
+    const res = await securityApi.getCaptcha()
+    const captchaURL = res.url;
     dispatch(getCaptchaURLSuccess(captchaURL))
   }
 }

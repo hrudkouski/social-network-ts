@@ -1,8 +1,8 @@
 import {AppThunk, InferActionsTypes} from "./redux-store";
-import {usersApi} from "../api/api";
 import {Dispatch} from "redux";
 import {updateObjectInArray} from "../utils/objects-helpers/objects-helpers";
 import {PhotoType} from "../types/types";
+import {usersApi} from "../api/usersApi";
 
 //Actions
 enum Users {
@@ -121,17 +121,17 @@ export const getResponseUsers = (currentPage: number): AppThunk => {
   return async (dispatch) => {
     dispatch(usersActions.toggleIsFetching(true));
     dispatch(usersActions.setCurrentPage(currentPage));
-    let data = await usersApi.getUsers(currentPage)
+    let res = await usersApi.getUsers(currentPage)
     dispatch(usersActions.toggleIsFetching(false));
-    dispatch(usersActions.setUsers(data.items));
-    dispatch(usersActions.setTotalUsersCount(data.totalCount));
+    dispatch(usersActions.setUsers(res.items));
+    dispatch(usersActions.setTotalUsersCount(res.totalCount));
   }
 }
 
 const _followUnFollowFlow = async (dispatch: Dispatch, userID: number, apiMethod: any, actionCreator: (userID: number) => UsersActionTypes) => {
   dispatch(usersActions.toggleFollowingProgress(true, userID));
-  let data = await apiMethod(userID);
-  if (data.resultCode === 0) {
+  let res = await apiMethod(userID);
+  if (res.resultCode === 0) {
     dispatch(actionCreator(userID))
   }
   dispatch(usersActions.toggleFollowingProgress(false, userID));

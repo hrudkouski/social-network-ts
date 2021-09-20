@@ -37,8 +37,8 @@ export const setInitialized = (value: boolean) => {
 export const initializeApp = (): AppThunk => {
   return (dispatch) => {
     dispatch(toggleIsFetching(true));
-    let promise = dispatch(getAuthUserData());
-    Promise.all([promise])
+    let res = dispatch(getAuthUserData());
+    Promise.all([res])
         .then(() => {
           dispatch(setInitialized(true))
           dispatch(toggleIsFetching(false));
