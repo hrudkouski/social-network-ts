@@ -19,8 +19,7 @@ export type AppActionType =
     | FormAction
     | AppActionTypes
 
-type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never;
-export type GetActionsTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
+export type GetActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionType>
 
