@@ -1,9 +1,8 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
-  follow, followUser, getResponseUsers,
-  setCurrentPage, toggleFollowingProgress,
-  unFollow, unFollowUser, UserType
+  follow, getResponseUsers, unFollow,
+  usersActions, UserType
 } from "../../redux/users_reducer";
 import React from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
@@ -77,10 +76,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
 export default compose<React.ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
-      followUser,
-      toggleFollowingProgress,
-      unFollowUser,
-      setCurrentPage,
+      followUser: usersActions.followUser,
+      toggleFollowingProgress: usersActions.toggleFollowingProgress,
+      unFollowUser: usersActions.unFollowUser,
+      setCurrentPage: usersActions.setCurrentPage,
       getResponseUsers,
       unFollow,
       follow

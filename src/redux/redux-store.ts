@@ -8,6 +8,7 @@ import thunkMiddleWare, {ThunkAction} from 'redux-thunk';
 import {FormAction, reducer as formReducer} from 'redux-form';
 import {AppActionTypes, appReducer} from "./app_reducer";
 
+//Types
 export type AppStateType = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch;
 export type AppActionType =
@@ -18,8 +19,12 @@ export type AppActionType =
     | FormAction
     | AppActionTypes
 
+type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never;
+export type InferActionsTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
+
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionType>
 
+//rootReducer
 let rootReducer = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
