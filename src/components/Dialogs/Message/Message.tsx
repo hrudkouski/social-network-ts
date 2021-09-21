@@ -2,14 +2,14 @@ import React from 'react'
 import s from './Message.module.css'
 
 export type MessageType = {
-    message: string
+  message: string
 }
 
-export const Message = (props: MessageType) => {
+export const Message: React.FC<MessageType> = ({message}) => {
 
-    return <div className={s.message}>
-        <div>
-            {props.message}
-        </div>
+  return <div className={s.message}>
+    <div>
+      {message}
     </div>
+  </div>
 }
