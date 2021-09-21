@@ -18,14 +18,6 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
-type MapDispatchToPropsType = { initializeApp: () => void };
-export type MapStatePropsType = { initialized: boolean };
-export type AppContainerPropsType = MapStatePropsType & MapDispatchToPropsType;
-
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-  return {initialized: state.app.initialized};
-}
-
 class App extends React.Component<AppContainerPropsType> {
 
   componentDidMount() {
@@ -33,9 +25,7 @@ class App extends React.Component<AppContainerPropsType> {
   }
 
   render() {
-
     if (!this.props.initialized) return <Preloader/>
-
     return (
         <Suspense fallback={<Preloader/>}>
           <HashRouter>
@@ -63,13 +53,21 @@ class App extends React.Component<AppContainerPropsType> {
   }
 }
 
+type MapDispatchToPropsType = { initializeApp: () => void };
+export type MapStatePropsType = ReturnType<typeof mapStateToProps>
+export type AppContainerPropsType = MapStatePropsType & MapDispatchToPropsType;
+
+const mapStateToProps = (state: AppStateType) => {
+  return {initialized: state.app.initialized};
+}
+
 const AppContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {
       initializeApp,
     }),
 )(App);
 
-export const MainApp = () => {
+export const MainApp: React.FC = () => {
   return <React.StrictMode>
     <Provider store={store}>
       <AppContainer/>
