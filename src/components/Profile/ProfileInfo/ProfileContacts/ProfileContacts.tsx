@@ -6,7 +6,7 @@ type ContactPropsType = {
   contactValue: string | undefined
 }
 
-export const Contacts: React.FC<ContactPropsType> = (
+export const ProfileContacts: React.FC<ContactPropsType> = (
     {
       contactTitle,
       contactValue

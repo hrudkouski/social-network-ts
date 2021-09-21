@@ -16,20 +16,29 @@ export type ProfileInfoType = {
   saveProfile: (formData: ProfileFormDataType) => void
 }
 
-export const ProfileInfo = (props: ProfileInfoType) => {
+export const ProfileInfo: React.FC<ProfileInfoType> = (
+    {
+      profileUser,
+      profileStatus,
+      isOwner,
+      updateStatus,
+      savePhoto,
+      saveProfile,
+    }
+) => {
 
   const [editProfile, setEditProfile] = useState<boolean>(false)
 
-  if (!props.profileUser) {
+  if (!profileUser) {
     return <Preloader/>
   }
 
   const activateEditModeHandler = () => {
-    if (props.isOwner) setEditProfile(true);
+    if (isOwner) setEditProfile(true);
   }
 
   const onProfileFormSubmit = (formData: ProfileFormDataType) => {
-    props.saveProfile(formData)
+    saveProfile(formData)
     setEditProfile(false);
   }
 
@@ -37,17 +46,17 @@ export const ProfileInfo = (props: ProfileInfoType) => {
       <div className={s.profileInfo}>
         <div className={s.description}>
           <img alt={'avatar'}
-               src={props.profileUser.photos.large || avatarPhoto}
+               src={profileUser.photos.large || avatarPhoto}
           />
 
           <div>
             <ProfileStatusWithHooks
-                isOwner={props.isOwner}
-                updateStatus={props.updateStatus}
-                profileStatus={props.profileStatus}
+                isOwner={isOwner}
+                updateStatus={updateStatus}
+                profileStatus={profileStatus}
             />
 
-            {props.isOwner && !editProfile && <button
+            {isOwner && !editProfile && <button
               onClick={activateEditModeHandler}>
               Edit profile
             </button>}
@@ -55,12 +64,12 @@ export const ProfileInfo = (props: ProfileInfoType) => {
             {editProfile
                 ? <ProfileDataForm
                     onSubmit={onProfileFormSubmit}
-                    initialValues={props.profileUser}
-                    savePhoto={props.savePhoto}
+                    initialValues={profileUser}
+                    savePhoto={savePhoto}
                     setEditProfile={setEditProfile}
-                    profileUser={props.profileUser}
+                    profileUser={profileUser}
                 />
-                : <ProfileData profileUser={props.profileUser}/>}
+                : <ProfileData profileUser={profileUser}/>}
           </div>
         </div>
       </div>

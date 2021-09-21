@@ -39,7 +39,7 @@ export const MyPosts: React.FC<MyPostPropsType> = React.memo((props) => {
     )
 })
 
-const maxLength10 = maxLengthCreator('10');
+const maxLength10 = maxLengthCreator('50');
 
 const AddNewPostForm: React.FC<InjectedFormProps<AddMessageFormDataType>> = (props) => {
     return <form onSubmit={props.handleSubmit}>

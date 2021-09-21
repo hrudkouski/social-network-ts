@@ -46,7 +46,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 class ProfileContainer extends React.Component<OwnProfilePropsType> {
 
   refreshProfile() {
-    let userID = Number(this.props.match.params.userID);
+    let userID: number | null = Number(this.props.match.params.userID);
     if (!userID) {
       userID = Number(this.props.authorizedUserID);
       if (!userID) {
@@ -65,6 +65,9 @@ class ProfileContainer extends React.Component<OwnProfilePropsType> {
     if (this.props.match.params.userID !== prevProps.match.params.userID) {
       this.refreshProfile()
     }
+  }
+
+  componentWillUnmount() {
   }
 
   render() {
