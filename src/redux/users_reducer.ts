@@ -3,6 +3,7 @@ import {Dispatch} from "redux";
 import {updateObjectInArray} from "../utils/objects-helpers/objects-helpers";
 import {PhotoType} from "../types/types";
 import {usersApi} from "../api/usersApi";
+import {ApiResponseType} from "../api/api";
 
 //Actions
 enum Users {
@@ -109,10 +110,13 @@ export const getResponseUsers = (currentPage: number): AppThunk => {
   }
 }
 
-const _followUnFollowFlow = async (dispatch: Dispatch, userID: number, apiMethod: any, actionCreator: (userID: number) => UsersActionTypes) => {
+const _followUnFollowFlow = async (dispatch: Dispatch<UsersActionTypes>,
+                                   userID: number,
+                                   apiMethod: (userID: number) => Promise<ApiResponseType>,
+                                   actionCreator: (userID: number) => UsersActionTypes) => {
   dispatch(usersActions.toggleFollowingProgress(true, userID));
-  let res = await apiMethod(userID);
-  if (res.resultCode === 0) {
+  let response = await apiMethod(userID);
+  if (response.resultCode === 0) {
     dispatch(actionCreator(userID))
   }
   dispatch(usersActions.toggleFollowingProgress(false, userID));
@@ -120,13 +124,13 @@ const _followUnFollowFlow = async (dispatch: Dispatch, userID: number, apiMethod
 
 export const follow = (userID: number): AppThunk => {
   return async (dispatch) => {
-    await _followUnFollowFlow(dispatch, userID, usersApi.follow, usersActions.followUser);
+    await _followUnFollowFlow(dispatch, userID, usersApi.follow.bind(usersApi), usersActions.followUser);
   }
 }
 
 export const unFollow = (userID: number): AppThunk => {
   return async (dispatch) => {
-    await _followUnFollowFlow(dispatch, userID, usersApi.unFollow, usersActions.unFollowUser);
+    await _followUnFollowFlow(dispatch, userID, usersApi.unFollow.bind(usersApi), usersActions.unFollowUser);
   }
 }
 
