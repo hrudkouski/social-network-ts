@@ -3,6 +3,7 @@ import s from "./Users.module.css";
 import {UserType} from "../../redux/users_reducer";
 import {Paginator} from "../../common/Paginator/Paginator";
 import {User} from './User/User';
+import {UsersSearchForm} from "./UsersSearchForm";
 
 type UsersPresentType = {
   totalUserCount: number
@@ -32,6 +33,7 @@ export const Users: FC<UsersPresentType> = (
   return (
       <div className={s.wrapper}>
         <h2>Users</h2>
+        <UsersSearchForm/>
         <Paginator
             portionSize={15}
             totalItemCount={totalUserCount}

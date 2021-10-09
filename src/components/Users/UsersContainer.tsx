@@ -27,7 +27,7 @@ type MapDispatchPropsType = {
   unFollowUser: (userID: number) => void
   setCurrentPage: (page: number) => void
   toggleFollowingProgress: (progress: boolean, userID: number) => void
-  getResponseUsers: (currentPage: number) => void
+  getResponseUsers: (currentPage: number, term: string) => void
   unFollow: (userID: number) => void
   follow: (userID: number) => void
 }
@@ -46,12 +46,12 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 class UsersContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
-    this.props.getResponseUsers(this.props.currentPage);
+    this.props.getResponseUsers(this.props.currentPage, '');
   }
 
   onPageChanged = (pageNumber: number) => {
     this.props.setCurrentPage(pageNumber);
-    this.props.getResponseUsers(pageNumber);
+    this.props.getResponseUsers(pageNumber, '');
   }
 
   render() {

@@ -11,6 +11,7 @@ enum Users {
   UNFOLLOW = 'social-network-ts/users_reducer/UNFOLLOW',
   SET_USERS = 'social-network-ts/users_reducer/SET_USERS',
   SET_CURRENT_PAGE = 'social-network-ts/users_reducer/SET_CURRENT_PAGE',
+  SET_FILTER = 'social-network-ts/users_reducer/SET_FILTER',
   SET_TOTAL_USERS_COUNT = 'social-network-ts/users_reducer/SET_TOTAL_USERS_COUNT',
   TOGGLE_IS_FETCHING = 'social-network-ts/users_reducer/TOGGLE_IS_FETCHING',
   TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network-ts/users_reducer/TOGGLE_IS_FOLLOWING_PROGRESS',
@@ -24,6 +25,7 @@ const initialState: UsersPageInitialStateType = {
   currentPage: 1,
   isFetching: false,
   followingInProgress: [], //array of users ids
+  filter: {term: ''},
 };
 
 //Reducer
@@ -48,6 +50,11 @@ export const usersReducer = (state = initialState, action: UsersActionTypes): Us
       return {
         ...state,
         currentPage: action.page,
+      }
+    case Users.SET_FILTER:
+      return {
+        ...state,
+        filter: action.payload
       }
     case Users.SET_TOTAL_USERS_COUNT:
       return {
@@ -83,6 +90,10 @@ export const usersActions = {
     type: Users.SET_CURRENT_PAGE,
     page
   } as const),
+  setFilter: (term: string) => ({
+    type: Users.SET_FILTER,
+    payload: {term}
+  } as const),
   setTotalUsersCount: (totalCount: number) => ({
     type: Users.SET_TOTAL_USERS_COUNT,
     totalCount
@@ -99,10 +110,11 @@ export const usersActions = {
 }
 
 //ThunkCreator
-export const getResponseUsers = (currentPage: number): AppThunk => {
+export const getResponseUsers = (currentPage: number, term: string): AppThunk => {
   return async (dispatch) => {
     dispatch(usersActions.toggleIsFetching(true));
     dispatch(usersActions.setCurrentPage(currentPage));
+    dispatch(usersActions.setFilter(term));
     let res = await usersApi.getUsers(currentPage)
     dispatch(usersActions.toggleIsFetching(false));
     dispatch(usersActions.setUsers(res.items));
@@ -150,5 +162,6 @@ export type UsersPageInitialStateType = {
   currentPage: number
   isFetching: boolean
   followingInProgress: Array<number>
+  filter: { term: string }
 }
 export type UsersActionTypes = GetActionsTypes<typeof usersActions>
