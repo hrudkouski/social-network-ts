@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
+  FilterType,
   follow, getResponseUsers, unFollow,
   usersActions, UserType
 } from "../../redux/users_reducer";
@@ -10,7 +11,7 @@ import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {
   getCurrentPage, getFollowingInProgress, getIsFetching,
-  getPageSize, getTotalUserCount, getUsers
+  getPageSize, getTotalUserCount, getUsers, getUsersFilter
 } from "../../redux/users_selectors";
 import {Users} from "./Users";
 
@@ -21,13 +22,14 @@ type MapStatePropsType = {
   currentPage: number
   isFetching: boolean
   followingInProgress: Array<number>
+  filter: FilterType
 }
 type MapDispatchPropsType = {
   followUser: (userID: number) => void
   unFollowUser: (userID: number) => void
   setCurrentPage: (page: number) => void
   toggleFollowingProgress: (progress: boolean, userID: number) => void
-  getResponseUsers: (currentPage: number, term: string) => void
+  getResponseUsers: (currentPage: number, filter: FilterType) => void
   unFollow: (userID: number) => void
   follow: (userID: number) => void
 }
@@ -41,17 +43,25 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     currentPage: getCurrentPage(state),
     isFetching: getIsFetching(state),
     followingInProgress: getFollowingInProgress(state),
+    filter: getUsersFilter(state),
   }
 }
 
 class UsersContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
-    this.props.getResponseUsers(this.props.currentPage, '');
+    const {currentPage, getResponseUsers, filter} = this.props
+    getResponseUsers(currentPage, filter);
   }
 
   onPageChanged = (pageNumber: number) => {
-    this.props.setCurrentPage(pageNumber);
-    this.props.getResponseUsers(pageNumber, '');
+    const {setCurrentPage, getResponseUsers, filter} = this.props
+    setCurrentPage(pageNumber);
+    getResponseUsers(pageNumber, filter);
+  }
+
+  onFilterChanged = (filter: FilterType) => {
+    const {getResponseUsers} = this.props
+    getResponseUsers(1, filter);
   }
 
   render() {
@@ -68,6 +78,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
           followingInProgress={this.props.followingInProgress}
           unFollow={this.props.unFollow}
           follow={this.props.follow}
+          onFilterChanged={this.onFilterChanged}
       />
     </>
   }

@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import s from "./Users.module.css";
-import {UserType} from "../../redux/users_reducer";
+import {FilterType, UserType} from "../../redux/users_reducer";
 import {Paginator} from "../../common/Paginator/Paginator";
 import {User} from './User/User';
 import {UsersSearchForm} from "./UsersSearchForm";
@@ -15,7 +15,8 @@ type UsersPresentType = {
   unFollowUser: (userID: number) => void
   followingInProgress: Array<number>
   unFollow: (userID: number) => void
-  follow: (userID: number) => void
+  follow: (userID: number) => void,
+  onFilterChanged: (filter: FilterType) => void
 }
 export const Users: FC<UsersPresentType> = (
     {
@@ -26,14 +27,15 @@ export const Users: FC<UsersPresentType> = (
       currentPage,
       onPageChanged,
       totalUserCount,
-      pageSize
+      pageSize,
+      onFilterChanged,
     }
 ) => {
 
   return (
       <div className={s.wrapper}>
-        <h2>Users</h2>
-        <UsersSearchForm/>
+        <h2 style={{textAlign: 'center'}}>Users</h2>
+        <UsersSearchForm onFilterChanged={onFilterChanged}/>
         <Paginator
             portionSize={15}
             totalItemCount={totalUserCount}

@@ -15,7 +15,7 @@ enum Profile {
 }
 
 //Initial State
-const initialState: ProfilePageInitialStateType = {
+const initialState = {
   posts: [
     {
       id: 1,
@@ -195,11 +195,6 @@ export type ProfileUserType = {
   userId: number
   photos: PhotoType
 }
-export type ProfilePageInitialStateType = {
-  posts: Array<PostType>
-  newPostText: string
-  profileUser: ProfileUserType | null
-  profileStatus: string
-}
+export type ProfilePageInitialStateType = typeof initialState;
 export type ProfileActionTypes = GetActionsTypes<typeof profileActions>
 

@@ -44,3 +44,10 @@ export const getFollowingInProgress = createSelector(getFollowingInProgressSelec
   return followingInProgress;
 })
 
+export const getUsersFilterSelector = (state: AppStateType) => {
+  return state.usersPage.filter
+}
+export const getUsersFilter = createSelector(getUsersFilterSelector, (filter) => {
+  return filter;
+})
+
