@@ -13,10 +13,11 @@ import {initializeApp} from "./redux/app_reducer";
 import store, {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./common/Preloader/Preloader";
 import {LoginPage} from './components/Login/Login';
+import {UsersPage} from './components/Users/UsersPage';
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+// const UsersPageContainer = React.lazy(() => import('./components/Users/UsersPage'));
 
 class App extends React.Component<AppContainerPropsType> {
 
@@ -37,7 +38,7 @@ class App extends React.Component<AppContainerPropsType> {
                   <Route exact path={'/'} render={() => <Redirect to="/profile"/>}/>
                   <Route render={() => <ProfileContainer/>} path="/profile/:userID?"/>
                   <Route render={() => <DialogsContainer/>} exact path="/dialogs"/>
-                  <Route render={() => <UsersContainer/>} exact path="/users"/>
+                  <Route render={() => <UsersPage/>} exact path="/users"/>
                   <Route component={News} path="/news"/>
                   <Route component={Music} path="/music"/>
                   <Route component={Settings} path="/settings"/>

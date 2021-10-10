@@ -19,10 +19,9 @@ export const UsersSearchForm: FC<PropsType> = ({onFilterChanged}) => {
 
   const submitForm = (values: FormType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
     const filter = {
-      term: '',
+      term: values.term,
       friend: values.friend === 'null' ? null : values.friend === 'true',
     }
-    debugger
     onFilterChanged(filter)
     setSubmitting(false);
   }
