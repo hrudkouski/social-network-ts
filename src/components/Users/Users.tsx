@@ -34,8 +34,8 @@ export const Users: FC<UsersPresentType> = () => {
   useEffect(() => {
     const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
 
-    let actualPage = currentPage;
-    let actualFilter = filter;
+    let actualPage = 1;
+    let actualFilter = {term: '', friend: null as null | boolean};
 
     if (!!parsed.page) {
       actualPage = Number(parsed.page)
@@ -57,7 +57,7 @@ export const Users: FC<UsersPresentType> = () => {
     }
 
     dispatch(getResponseUsers(actualPage, actualFilter))
-  }, [])
+  }, [dispatch, history])
 
   useEffect(() => {
     const query: QueryParamsType = {}

@@ -20,7 +20,7 @@ export const User: React.FC<UserPropsType> = (
 ) => {
 
   return (
-      <div style={{marginBottom: '15px', color: '#fff'}}>
+      <div style={{marginBottom: '15px'}}>
         <>
           <div>
             <NavLink to={"/profile/" + user.id}>
