@@ -22,6 +22,7 @@ const {Content, Sider, Footer} = Layout;
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersPage = React.lazy(() => import('./components/Users/UsersPage'));
+const ChatPage = React.lazy(() => import('./pages/chat/ChatPage'));
 
 class App extends React.Component<AppContainerPropsType> {
 
@@ -61,15 +62,18 @@ class App extends React.Component<AppContainerPropsType> {
                   <Menu.Item key="4">
                     <Link to={"/music"}>Music</Link>
                   </Menu.Item>
+                  <Menu.Item key="5">
+                    <Link to={"/settings"}>Settings</Link>
+                  </Menu.Item>
                 </SubMenu>
                 <SubMenu key="Developers" icon={<LaptopOutlined/>} title="Developers">
-                  <Menu.Item key="5">
+                  <Menu.Item key="6">
                     <Link to={"/users"}>Users</Link>
                   </Menu.Item>
                 </SubMenu>
-                <SubMenu key="Settings" icon={<NotificationOutlined/>} title="Settings">
-                  <Menu.Item key="6">
-                    <Link to={"/settings"}>Settings</Link>
+                <SubMenu key="Chat" icon={<NotificationOutlined/>} title="Chat">
+                  <Menu.Item key="7">
+                    <Link to={"/chat"}>Chat</Link>
                   </Menu.Item>
                 </SubMenu>
               </Menu>
@@ -83,6 +87,7 @@ class App extends React.Component<AppContainerPropsType> {
                   <Route render={() => <ProfileContainer/>} path="/profile/:userID?"/>
                   <Route render={() => <DialogsContainer/>} exact path="/dialogs"/>
                   <Route render={() => <UsersPage/>} path='/users'/>
+                  <Route render={() => <ChatPage/>} path='/chat'/>
                   <Route component={News} path="/news"/>
                   <Route component={Music} path="/music"/>
                   <Route component={Settings} path="/settings"/>
