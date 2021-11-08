@@ -50,10 +50,20 @@ const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
 }
 
 const AddMessageChatForm: React.FC = () => {
+
+  const [text, sendMessageText] = useState<string>('')
+
+  const sendMessage = () => {
+    if (!text) return
+    wsChannel.send(text)
+    sendMessageText('')
+  }
+
   return <div>
-    <textarea> </textarea>
+    <textarea onChange={e => sendMessageText(e.currentTarget.value)}
+              value={text}/>
     <div>
-      <Button>Send</Button>
+      <Button onClick={sendMessage}>Send</Button>
     </div>
   </div>
 }
