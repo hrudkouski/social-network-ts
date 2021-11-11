@@ -7,6 +7,7 @@ import {sideBarReducer} from "./sideBar_reducer";
 import thunkMiddleWare, {ThunkAction} from 'redux-thunk';
 import {FormAction, reducer as formReducer} from 'redux-form';
 import {AppActionTypes, appReducer} from "./app_reducer";
+import {ChatActionTypes, chatReducer} from "./chat_reducer";
 
 //Types
 export type AppStateType = ReturnType<typeof rootReducer>
@@ -16,6 +17,7 @@ export type AppActionType =
     | DialogsActionTypes
     | UsersActionTypes
     | AuthActionTypes
+    | ChatActionTypes
     | FormAction
     | AppActionTypes
 
@@ -31,6 +33,7 @@ let rootReducer = combineReducers({
   sideBar: sideBarReducer,
   auth: authReducer,
   app: appReducer,
+  chat: chatReducer,
   form: formReducer,
 })
 
