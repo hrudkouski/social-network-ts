@@ -42,7 +42,7 @@ function createChannel() {
   notifySubscribersAboutStatus('pending')
   ws.addEventListener('close', closeHandler)
   ws.addEventListener('message', messageHandler)
-  ws.addEventListener('StatusChanged', openHandler)
+  ws.addEventListener('open', openHandler)
   ws.addEventListener('error', errorHandler)
 }
 

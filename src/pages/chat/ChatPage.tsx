@@ -1,5 +1,5 @@
 import {Button} from "antd";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ChatMessageType} from "../../api/chatApi";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -26,22 +26,38 @@ const Chat: React.FC = () => {
   }, [dispatch])
 
   return <>
-    {
-      status === 'error'
-          ? <div>Some error occurred. Please refresh your page</div>
-          : <>
-            <Messages/>
-            <AddMessageChatForm/>
-          </>
-    }
+    {status === 'error' && <div>Some error occurred. Please refresh your page</div>}
+    <>
+      <Messages/>
+      <AddMessageChatForm/>
+    </>
+
   </>
 }
 
 const Messages: React.FC = () => {
   const messages = useSelector((state: AppStateType) => state.chat.messages)
+  const messagesAnchorRef = useRef<HTMLDivElement>(null)
+  const [isAutoScroll, setIsAutoScroll] = useState<boolean>(true)
 
-  return <div style={{height: '400px', overflowY: "auto"}}>
+  const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const element = e.currentTarget;
+    if (Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 300) {
+      !isAutoScroll && setIsAutoScroll(true)
+    } else {
+      isAutoScroll && setIsAutoScroll(false)
+    }
+  }
+
+  useEffect(() => {
+    if (isAutoScroll) {
+      messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
+    }
+  }, [messages, isAutoScroll])
+
+  return <div style={{height: '400px', overflowY: "auto"}} onScroll={scrollHandler}>
     {messages.map((el, i) => <Message message={el} key={i}/>)}
+    <div ref={messagesAnchorRef}/>
   </div>
 }
 
