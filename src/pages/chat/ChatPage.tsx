@@ -1,6 +1,6 @@
 import {Button} from "antd";
 import React, {useEffect, useRef, useState} from "react";
-import {ChatMessageType} from "../../api/chatApi";
+import {ChatMessageAPIType} from "../../api/chatApi";
 import {useDispatch, useSelector} from "react-redux";
 import {
   sendMessage,
@@ -56,12 +56,13 @@ const Messages: React.FC = () => {
   }, [messages, isAutoScroll])
 
   return <div style={{height: '400px', overflowY: "auto"}} onScroll={scrollHandler}>
-    {messages.map((el, i) => <Message message={el} key={i}/>)}
+    {messages.map((el) => <Message message={el} key={el.id}/>)}
     <div ref={messagesAnchorRef}/>
   </div>
 }
 
-const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
+const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(({message}) => {
+  console.log('>>>>>>>>>>>Message')
   return <>
     <img src={message.photo !== null
         ? message.photo
@@ -73,7 +74,7 @@ const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
     {message.message}
     <hr/>
   </>
-}
+})
 
 const AddMessageChatForm: React.FC = () => {
   const [text, sendMessageText] = useState<string>('')

@@ -1,6 +1,7 @@
 import {AppThunk, GetActionsTypes} from "./redux-store";
-import {chatApi, ChatMessageType, ChatStatusType} from "../api/chatApi";
+import {chatApi, ChatMessageAPIType, ChatStatusType} from "../api/chatApi";
 import {Dispatch} from "redux";
+import {v1} from "uuid";
 
 //Actions
 enum Chat {
@@ -16,11 +17,15 @@ const initialState = {
 
 //Reducer
 export const chatReducer = (state = initialState, action: ChatActionTypes): ChatInitialStateType => {
+
   switch (action.type) {
     case Chat.MESSAGES_RECEIVED:
       return {
         ...state,
-        messages: [...state.messages, ...action.payload.messages],
+        messages: [
+          ...state.messages,
+          ...action.payload.messages.map(m => ({...m, id: v1()}))
+        ].filter((m, index, arr) => index >= arr.length - 100),
       }
     case Chat.STATUS_CHANGED:
       return {
@@ -34,7 +39,7 @@ export const chatReducer = (state = initialState, action: ChatActionTypes): Chat
 
 //Action Creators
 export const chatActions = {
-  messagesReceived: (messages: ChatMessageType[]) => ({
+  messagesReceived: (messages: ChatMessageAPIType[]) => ({
     type: Chat.MESSAGES_RECEIVED,
     payload: {messages},
   } as const),
@@ -45,10 +50,10 @@ export const chatActions = {
 }
 
 //Thunk Creators
-let _newMessageHandler: ((messages: ChatMessageType[]) => void) | null = null
+let _newMessageHandler: ((messages: ChatMessageAPIType[]) => void) | null = null
 const newMessageHandlerCreator = (dispatch: Dispatch) => {
   if (_newMessageHandler === null) {
-    _newMessageHandler = (messages: ChatMessageType[]) => {
+    _newMessageHandler = (messages: ChatMessageAPIType[]) => {
       dispatch(chatActions.messagesReceived(messages))
     }
   }
@@ -88,3 +93,4 @@ export const sendMessage = (message: string): AppThunk => {
 //Types
 type ChatInitialStateType = typeof initialState;
 export type ChatActionTypes = GetActionsTypes<typeof chatActions>
+export type ChatMessageType = ChatMessageAPIType & { id: string }
