@@ -8,6 +8,7 @@ import {
   stopMessagesListening
 } from "../../redux/chat_reducer";
 import {AppStateType} from "../../redux/redux-store";
+import avatarPhoto from "../../assets/images/avatar.png";
 
 const ChatPage: React.FC = () => {
   return <div><Chat/></div>
@@ -15,6 +16,8 @@ const ChatPage: React.FC = () => {
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch()
+  const status = useSelector((state: AppStateType) => state.chat.status)
+
   useEffect(() => {
     dispatch(startMessagesListening())
     return () => {
@@ -23,8 +26,14 @@ const Chat: React.FC = () => {
   }, [dispatch])
 
   return <>
-    <Messages/>
-    <AddMessageChatForm/>
+    {
+      status === 'error'
+          ? <div>Some error occurred. Please refresh your page</div>
+          : <>
+            <Messages/>
+            <AddMessageChatForm/>
+          </>
+    }
   </>
 }
 
@@ -38,7 +47,11 @@ const Messages: React.FC = () => {
 
 const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
   return <>
-    <img src={message.photo} alt="avatar" style={{width: '30px'}}/>
+    <img src={message.photo !== null
+        ? message.photo
+        : avatarPhoto}
+         alt="avatar"
+         style={{width: '30px'}}/>
     <b>{message.userName}</b>
     <br/>
     {message.message}
@@ -49,6 +62,7 @@ const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
 const AddMessageChatForm: React.FC = () => {
   const [text, sendMessageText] = useState<string>('')
   const dispatch = useDispatch()
+  const status = useSelector((state: AppStateType) => state.chat.status)
 
   const sendMessageHandler = () => {
     if (!text) return
@@ -61,6 +75,7 @@ const AddMessageChatForm: React.FC = () => {
               value={text}/>
     <div>
       <Button
+          disabled={status !== 'ready'}
           onClick={sendMessageHandler}>Send</Button>
     </div>
   </div>
